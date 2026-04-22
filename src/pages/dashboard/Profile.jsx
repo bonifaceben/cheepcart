@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../config/api";
-import "../profile.css";
+import "../Profile.css";
 
 export default function Profile() {
   const { token, user, loading: authLoading } = useAuth();
