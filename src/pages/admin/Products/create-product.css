@@ -1,0 +1,175 @@
+.admin-create-product {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.admin-create-product h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.admin-create-product label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.admin-create-product input[type="text"],
+.admin-create-product input[type="number"],
+.admin-create-product textarea,
+.admin-create-product select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.admin-create-product input[type="text"]:focus,
+.admin-create-product input[type="number"]:focus,
+.admin-create-product textarea:focus,
+.admin-create-product select:focus {
+  border-color: #ff6b35;
+  outline: none;
+}
+
+.admin-create-product textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.admin-create-product .upload-container {
+  width: 100%;
+  padding: 30px;
+  border: 2px dashed #ff6b35;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fafafa;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.admin-create-product .upload-container p {
+  font-size: 16px;
+  color: #ff6b35;
+  margin-top: 10px;
+}
+
+.admin-create-product .upload-container:hover {
+  background-color: #f4f4f4;
+}
+
+.admin-create-product .upload-container.active {
+  border-color: #42a5f5;
+}
+
+.admin-create-product .upload-container .icon {
+  font-size: 30px;
+  color: #ff6b35;
+  margin-bottom: 10px;
+}
+
+.admin-create-product .image-preview {
+  margin-top: 15px;
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.admin-create-product button[type="submit"],
+.admin-create-product button[type="button"] {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.admin-create-product button[type="submit"] {
+  background-color: #ff6b35;
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+.admin-create-product button[type="button"] {
+  background-color: #eee;
+  color: #ff6b35;
+}
+
+.admin-create-product button[type="submit"]:hover {
+  background-color: #41281e;
+}
+
+.admin-create-product button[type="button"]:hover {
+  background-color: #ffddd4;
+}
+
+.admin-create-product button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.admin-create-product button[type="submit"]:disabled:hover,
+.admin-create-product button[type="button"]:disabled:hover {
+  background-color: #ddd;
+}
+
+.admin-create-product .form-group {
+  margin-bottom: 20px;
+}
+
+.admin-create-product .form-group select,
+.admin-create-product .form-group input[type="file"] {
+  cursor: pointer;
+}
+
+.admin-create-product .error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.admin-create-product .success {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .admin-create-product {
+    padding: 20px;
+  }
+
+  .admin-create-product h2 {
+    font-size: 22px;
+  }
+
+  .admin-create-product input[type="text"],
+  .admin-create-product input[type="number"],
+  .admin-create-product textarea,
+  .admin-create-product select {
+    font-size: 14px;
+  }
+
+  .admin-create-product button[type="submit"],
+  .admin-create-product button[type="button"] {
+    font-size: 14px;
+  }
+
+  .admin-create-product .upload-container {
+    padding: 20px;
+  }
+}

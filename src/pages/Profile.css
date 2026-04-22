@@ -1,0 +1,75 @@
+.cc-profile-wrapper {
+  margin-top: 40px;
+}
+
+.cc-profile-card {
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  padding: 20px;
+}
+
+.cc-profile-form-card {
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  padding: 20px;
+}
+
+.cc-profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #ff6a00;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.cc-orange-btn {
+  background-color: #ff6a00;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.cc-orange-btn:hover {
+  background-color: #e85f00;
+}
+
+
+/* Remove Bootstrap focus outline */
+.form-control:focus {
+  box-shadow: none !important;
+  border-color: #ff6a00 !important;
+}
+
+/* Optional: smooth border transition */
+.form-control {
+  transition: border-color 0.2s ease;
+}
+
+.cc-role-badge {
+  background-color: #ff6a00 !important;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 200;
+  text-transform: capitalize;
+}
+
+.cc-verified-badge {
+  background-color: #6f42c1 !important;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 200;
+}
+
+
