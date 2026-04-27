@@ -1,4 +1,4 @@
-import "./skeleton.css";
+import "./Skeleton.css";
 
 /* 🔹 BASE (reusable block) */
 export const Skeleton = ({ className = "" }) => {
