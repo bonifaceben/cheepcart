@@ -1,0 +1,115 @@
+/* ===== SIDEBAR BASE ===== */
+
+.sb-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px 10px;
+  height: 100%;
+  background: #ffffff;
+  color: #fff;
+}
+
+/* ===== LINKS ===== */
+
+.sb-menu a,
+.sb-dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #000000;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+/* ICON */
+.sb-menu svg {
+  font-size: 16px;
+  min-width: 20px;
+}
+
+/* HOVER */
+.sb-menu a:hover,
+.sb-dropdown-btn:hover {
+  background: #1f2937;
+  color: #fff;
+}
+
+/* ACTIVE */
+.sb-menu a.active {
+  background: #ff6b00;
+  color: #fff;
+}
+
+/* ===== DROPDOWN BUTTON ===== */
+
+.sb-dropdown-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+/* TEXT ALIGN */
+.sb-dropdown-btn span {
+  flex: 1;
+  text-align: left;
+}
+
+/* ROTATE ARROW */
+.sb-dropdown-btn.open svg:last-child {
+  transform: rotate(180deg);
+  transition: 0.3s;
+}
+
+/* ===== SECTION ===== */
+
+.sb-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== DROPDOWN MENU ===== */
+
+.sb-dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-left: 30px;
+  margin-top: 5px;
+  position: relative; /* keeps layout clean */
+}
+
+/* DROPDOWN LINKS */
+.sb-dropdown-menu a {
+  font-size: 13px;
+  padding: 8px 10px;
+  color: #d27001;
+  border-radius: 6px;
+}
+
+.sb-dropdown-menu a:hover {
+  background: #1f2937;
+  color: #fff;
+}
+
+/* ===== ANIMATION ===== */
+
+.sb-dropdown-menu {
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

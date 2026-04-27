@@ -16,6 +16,13 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout"; // ✅ ADDED
 import CheckoutSummary from "./pages/CheckoutSummary";
 
+
+// ================= BANNERS =================
+import CreateBanner from "./pages/admin/CreateBanner";
+import CreateSideBanner from "./pages/admin/CreateSideBanner";
+import UpdateBanner from "./pages/admin/UpdateBanner";
+import BannerList from "./pages/admin/BannerList";
+
 // ================= ROUTE GUARDS =================
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -25,6 +32,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 // ================= CUSTOMER DASHBOARD =================
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Profile from "./pages/dashboard/Profile";
+
 
 // ================= ADMIN DASHBOARD =================
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -36,6 +44,7 @@ import DeleteCategory from "./pages/admin/Categories/DeleteCategory";
 import AdminCreateProduct from "./pages/admin/Products/AdminCreateProduct";
 import AdminProductList from "./pages/admin/Products/AdminProductList";
 import AdminUpdateProduct from "./pages/admin/Products/AdminUpdateProduct";
+
 
 // ================= PRODUCT DETAILS =================
 import ProductDetails from "./pages/admin/Products/ProductDetails";
@@ -106,26 +115,33 @@ function App() {
 
           {/* ================= ADMIN DASHBOARD ================= */}
           <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminLayout />
-              </AdminRoute>
-            }
-          >
-            <Route index element={<AdminDashboard />} />
+  path="/admin"
+  element={
+    <AdminRoute>
+      <AdminLayout />
+    </AdminRoute>
+  }
+>
+  <Route index element={<AdminDashboard />} />
 
-            {/* Categories Routes */}
-            <Route path="categories/create" element={<AdminCreateCategory />} />
-            <Route path="categories" element={<CategoriesList />} />
-            <Route path="categories/update/:categoryId" element={<UpdateCategory />} />
-            <Route path="categories/delete/:categoryId" element={<DeleteCategory />} />
+  {/* Categories */}
+  <Route path="categories/create" element={<AdminCreateCategory />} />
+  <Route path="categories" element={<CategoriesList />} />
+  <Route path="categories/update/:categoryId" element={<UpdateCategory />} />
+  <Route path="categories/delete/:categoryId" element={<DeleteCategory />} />
 
-            {/* Products Routes */}
-            <Route path="products/create" element={<AdminCreateProduct />} />
-            <Route path="products" element={<AdminProductList />} />
-            <Route path="products/update/:productId" element={<AdminUpdateProduct />} />
-          </Route>
+  {/* Products */}
+  <Route path="products/create" element={<AdminCreateProduct />} />
+  <Route path="products" element={<AdminProductList />} />
+  <Route path="products/update/:productId" element={<AdminUpdateProduct />} />
+
+  {/* 🔥 FIXED BANNERS ROUTE */}
+  <Route path="banners/create" element={<CreateBanner />} />
+  <Route path="side-banners/create" element={<CreateSideBanner />} />
+  <Route path="banners/update/:bannerId" element={<UpdateBanner />} />
+  <Route path="banners" element={<BannerList />} />
+
+</Route>
 
           <Route
   path="/payment-success"

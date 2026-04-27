@@ -1,0 +1,109 @@
+/* src/components/footer.css */
+
+.cc-footer {
+  background: #f0f0f0;
+  padding: 40px 20px 20px;
+  color: #333;
+}
+
+/* GRID */
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+/* COLUMN */
+.footer-col h4 {
+  color: rgb(250, 169, 46);
+  font-size: 14px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.footer-col p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* LIST */
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.footer-col ul li:hover {
+  color: rgb(250, 169, 46);
+}
+
+/* NEWSLETTER */
+.newsletter-box {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.newsletter-box input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.newsletter-box button {
+  background: linear-gradient(120deg, #5a028d, #b904c6);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.newsletter-box button:hover {
+  background: linear-gradient(120deg, #5a028d, #fb41e8);
+}
+
+/* BOTTOM */
+.footer-bottom {
+  border-top: 1px solid #ddd;
+  margin-top: 30px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* SOCIALS */
+.footer-socials {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-socials svg {
+  background: #ddd;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.footer-socials svg:hover {
+  background: #ff0000;
+  color: #fff;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

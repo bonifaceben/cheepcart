@@ -4,6 +4,7 @@ import { FaPlus, FaMinus, FaTrash, FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import "./Cart.css";
+import { CartSkeleton } from "../components/Skeleton";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -236,7 +237,7 @@ const Cart = () => {
   if (loading) {
     return (
       <div className="cart-page">
-        <p>Loading cart...</p>
+        <CartSkeleton/>
       </div>
     );
   }

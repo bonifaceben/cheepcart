@@ -1,14 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
-// import Footer from "./Footer"; // Uncomment when your Footer is ready
+import Footer from "./Footer"; // Uncomment when your Footer is ready
 
 const MainLayout = () => {
   return (
     <>
       <Header />
       <Outlet />
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

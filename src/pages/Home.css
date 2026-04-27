@@ -294,6 +294,90 @@
   }
 }
 
+
+/* MAIN BANNER */
+.cc-banner {
+  height: 400px;
+  position: relative;
+}
+
+.cc-banner-slider {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.cc-banner-track {
+  display: flex;
+  height: 100%;
+  
+}
+
+.cc-banner-slide {
+  min-width: 100%;
+  height: 100%;
+}
+
+.cc-banner-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* SIDE BANNER */
+.cc-side-banner {
+  height: 400px;
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cc-side-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* LOADERS */
+.cc-banner-loader,
+.cc-side-loader {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cc-banner-loader img,
+.cc-side-loader img {
+  width: 100px;
+
+}
+
+/* DOTS */
+.cc-banner-dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 5px;
+  background: rgba(255,255,255,0.5);
+  display: inline-block;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #ff6b00;
+}
+
+
+
+
 /* =========================
    SMALL MOBILE
 ========================= */

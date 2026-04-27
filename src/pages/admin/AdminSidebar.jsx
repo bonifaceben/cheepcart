@@ -1,78 +1,128 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import "./sidebar.css";
 import {
   FaTachometerAlt,
   FaBox,
   FaShoppingCart,
   FaUsers,
   FaChartLine,
-  FaTags, // Category icon
-  FaCaretDown, // Dropdown icon
+  FaTags,
+  FaCaretDown,
+  FaImages
 } from "react-icons/fa";
 
-export default function AdminSidebar({ toggleSidebar }) {
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false); // Dropdown state for categories
-  const [isProductsOpen, setIsProductsOpen] = useState(false); // Dropdown state for products
+export default function AdminSidebar({ onLinkClick }) {
+  const [openMenu, setOpenMenu] = useState(null);
+  const sidebarRef = useRef();
 
-  const toggleCategories = () => {
-    setIsCategoriesOpen(!isCategoriesOpen); // Toggle state for categories
+  // CLOSE ON OUTSIDE CLICK
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+        setOpenMenu(null);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // TOGGLE
+  const handleToggle = (menu) => {
+    setOpenMenu((prev) => (prev === menu ? null : menu));
   };
 
-  const toggleProducts = () => {
-    setIsProductsOpen(!isProductsOpen); // Toggle state for products
+  const handleLinkClick = () => {
+    setOpenMenu(null);
+    onLinkClick && onLinkClick();
   };
 
   return (
-    <div className="sidebar-menu">
-      <NavLink to="/admin" onClick={toggleSidebar}>
+    <div className="sb-menu" ref={sidebarRef}>
+
+      <NavLink to="/admin" onClick={handleLinkClick}>
         <FaTachometerAlt /> <span>Dashboard</span>
       </NavLink>
 
-      {/* Products Dropdown */}
-      <div className="sidebar-products">
-        <button onClick={toggleProducts} className="dropdown-btn">
+      {/* PRODUCTS */}
+      <div className="sb-section">
+        <button
+          onClick={() => handleToggle("products")}
+          className={`sb-dropdown-btn ${openMenu === "products" ? "open" : ""}`}
+        >
           <FaBox /> <span>Products</span> <FaCaretDown />
         </button>
-        {isProductsOpen && (
-          <div className="dropdown-menu">
-            <NavLink to="/admin/products" onClick={toggleSidebar}>
+
+        {openMenu === "products" && (
+          <div className="sb-dropdown-menu">
+            <NavLink to="/admin/products" onClick={handleLinkClick}>
               All Products
             </NavLink>
-            <NavLink to="/admin/products/create" onClick={toggleSidebar}>
+            <NavLink to="/admin/products/create" onClick={handleLinkClick}>
               Add Product
             </NavLink>
           </div>
         )}
       </div>
 
-      <NavLink to="/admin/orders" onClick={toggleSidebar}>
+      <NavLink to="/admin/orders" onClick={handleLinkClick}>
         <FaShoppingCart /> <span>Orders</span>
       </NavLink>
 
-      <NavLink to="/admin/customers" onClick={toggleSidebar}>
+      <NavLink to="/admin/customers" onClick={handleLinkClick}>
         <FaUsers /> <span>Customers</span>
       </NavLink>
 
-      <NavLink to="/admin/analytics" onClick={toggleSidebar}>
+      <NavLink to="/admin/analytics" onClick={handleLinkClick}>
         <FaChartLine /> <span>Analytics</span>
       </NavLink>
 
-      {/* Categories Dropdown */}
-      <div className="sidebar-category">
-        <button onClick={toggleCategories} className="dropdown-btn">
+      {/* BANNERS */}
+      <div className="sb-section">
+        <button
+          onClick={() => handleToggle("banners")}
+          className={`sb-dropdown-btn ${openMenu === "banners" ? "open" : ""}`}
+        >
+          <FaImages /> <span>Banners</span> <FaCaretDown />
+        </button>
+
+        {openMenu === "banners" && (
+          <div className="sb-dropdown-menu">
+            <NavLink to="/admin/banners" onClick={handleLinkClick}>
+              All Banners
+            </NavLink>
+            <NavLink to="/admin/banners/create" onClick={handleLinkClick}>
+              Upload Main Banner
+            </NavLink>
+            <NavLink to="/admin/side-banners/create" onClick={handleLinkClick}>
+              Upload Side Banner
+            </NavLink>
+          </div>
+        )}
+      </div>
+
+      {/* CATEGORIES */}
+      <div className="sb-section">
+        <button
+          onClick={() => handleToggle("categories")}
+          className={`sb-dropdown-btn ${openMenu === "categories" ? "open" : ""}`}
+        >
           <FaTags /> <span>Categories</span> <FaCaretDown />
         </button>
-        {isCategoriesOpen && (
-          <div className="dropdown-menu">
-            <NavLink to="/admin/categories" onClick={toggleSidebar}>
+
+        {openMenu === "categories" && (
+          <div className="sb-dropdown-menu">
+            <NavLink to="/admin/categories" onClick={handleLinkClick}>
               All Categories
             </NavLink>
-            <NavLink to="/admin/categories/create" onClick={toggleSidebar}>
+            <NavLink to="/admin/categories/create" onClick={handleLinkClick}>
               Add Category
             </NavLink>
           </div>
         )}
       </div>
+
     </div>
   );
 }

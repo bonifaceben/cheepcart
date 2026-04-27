@@ -4,6 +4,7 @@ import { API_BASE_URL } from "../../../config/api";
 import { FaHeart, FaRegHeart, FaShoppingCart, FaPlus, FaMinus } from "react-icons/fa";
 import './ProductDetails.css';
 import { useCart } from '../../../context/CartContext'; // Import the CartContext
+import {  ProductDetailsSkeleton } from '../../../components/Skeleton';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -384,7 +385,7 @@ const ProductDetails = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <ProductDetailsSkeleton />
   if (error) return <p>{error}</p>;
   if (!product) return <p>Product not found.</p>;
 

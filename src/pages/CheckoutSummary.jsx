@@ -17,11 +17,11 @@ export default function CheckoutSummary() {
 
     if (location.state && location.state.items) {
       setCheckout(location.state);
-      setLoading(false);
     } else {
       console.warn("❌ No checkout data received");
-      setLoading(false);
     }
+
+    setLoading(false);
   }, [location.state]);
 
   // ================= LOADING =================
@@ -66,7 +66,10 @@ export default function CheckoutSummary() {
           shippingAddress,
           items,
           pricing,
-          recipientCity: shippingAddress.redstarCityAbbr,
+
+          // ✅ FIXED: use FULL city name
+          recipientCity: shippingAddress.city,
+
           recipientTownID: shippingAddress.redstarTownId,
         }),
       });
@@ -104,7 +107,6 @@ export default function CheckoutSummary() {
         throw new Error(paymentData.message || "Payment initialization failed");
       }
 
-      // ✅ CORRECT BASED ON YOUR BACKEND
       const paymentUrl = paymentData.payment?.authorizationUrl;
 
       if (!paymentUrl) {
@@ -155,34 +157,55 @@ export default function CheckoutSummary() {
           <h3>Your Order</h3>
 
           <div className="order-items">
-            {items.map((item, i) => (
-              <div key={i} className="order-item">
-                <p>{item.name} × {item.quantity}</p>
-                <p>₦{item.subtotal.toLocaleString()}</p>
-              </div>
-            ))}
+            {items.map((item, i) => {
+              const product = item.product || item;
+
+              const name = product.name || item.name;
+              const price = product.price || item.price || 0;
+              const subtotal = item.subtotal || price * item.quantity;
+
+              const image =
+                product.images?.[0]?.secure_url ||
+                item.image ||
+                "/placeholder.png";
+
+              return (
+                <div key={i} className="order-item">
+                  <div className="order-item-left">
+                    <img
+                      src={image}
+                      alt={name}
+                      className="order-item-image"
+                    />
+                    <span>{name} × {item.quantity}</span>
+                  </div>
+
+                  <p>₦{subtotal.toLocaleString()}</p>
+                </div>
+              );
+            })}
           </div>
 
           <hr />
 
           <div className="summary-row">
             <span>Subtotal</span>
-            <span>₦{pricing.subtotal.toLocaleString()}</span>
+            <span>₦{pricing?.subtotal?.toLocaleString() || 0}</span>
           </div>
 
           <div className="summary-row">
             <span>Delivery Fee</span>
-            <span>₦{pricing.deliveryFee.toLocaleString()}</span>
+            <span>₦{pricing?.deliveryFee?.toLocaleString() || 0}</span>
           </div>
 
           <div className="summary-row">
             <span>VAT</span>
-            <span>₦{pricing.vatAmount.toLocaleString()}</span>
+            <span>₦{pricing?.vatAmount?.toLocaleString() || 0}</span>
           </div>
 
           <div className="summary-total">
             <strong>Total</strong>
-            <strong>₦{pricing.totalAmount.toLocaleString()}</strong>
+            <strong>₦{pricing?.totalAmount?.toLocaleString() || 0}</strong>
           </div>
 
           <button

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { API_BASE_URL } from "../config/api";
+import { CheckoutSkeleton } from "./Skeleton";
 
 export default function CartGuardRoute({ children }) {
   const [loading, setLoading] = useState(true);
@@ -33,7 +34,7 @@ export default function CartGuardRoute({ children }) {
     checkCart();
   }, []);
 
-  if (loading) return <p style={{ padding: "20px" }}>Checking cart...</p>;
+  if (loading) return <CheckoutSkeleton/>;
 
   // 🚫 Redirect if empty
   if (!hasItems) {

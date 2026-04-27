@@ -1,0 +1,192 @@
+.skeleton-card {
+  pointer-events: none;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 140px;
+  border-radius: 8px;
+  background: #eee;
+  margin-bottom: 10px;
+}
+
+.skeleton-text {
+  height: 12px;
+  background: #eee;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-text.title {
+  width: 80%;
+  height: 14px;
+}
+
+.skeleton-text.price {
+  width: 60%;
+  height: 16px;
+}
+
+.skeleton-text.small {
+  width: 40%;
+}
+
+.skeleton-stock {
+  margin-top: 10px;
+}
+
+.skeleton-bar {
+  height: 6px;
+  width: 100%;
+  border-radius: 999px;
+  background: #eee;
+}
+
+/* ✨ SHIMMER EFFECT (VERY IMPORTANT) */
+.skeleton-image,
+.skeleton-text,
+.skeleton-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-image::after,
+.skeleton-text::after,
+.skeleton-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(90deg, transparent, #f5f5f5, transparent);
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    left: 100%;
+  }
+}
+
+
+.skeleton {
+  background: #eee;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #f5f5f5, transparent);
+  animation: shimmer 1.2s infinite;
+}
+
+.pd-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 30px;
+  background: #fff;
+}
+
+.pd-image {
+  width: 100%;
+  height: 300px;
+}
+
+.title {
+  height: 20px;
+  width: 80%;
+  margin-bottom: 12px;
+}
+
+.price {
+  height: 24px;
+  width: 40%;
+  margin-bottom: 10px;
+}
+
+.small {
+  height: 12px;
+  width: 60%;
+  margin-bottom: 8px;
+}
+
+.button {
+  height: 40px;
+  width: 150px;
+  margin-top: 20px;
+}
+
+
+
+
+/* =========================
+   CHECKOUT SKELETON
+========================= */
+
+.checkout-container2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+}
+
+/* LEFT SIDE (FORM AREA) */
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-line {
+  height: 45px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Short inputs (like city, zip side by side) */
+.form-line.half {
+  width: 48%;
+}
+
+/* Group for 2 inputs */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* RIGHT SIDE (ORDER SUMMARY) */
+.summary-box {
+  height: 250px;
+  border-radius: 12px;
+}
+
+/* Fake lines inside summary */
+.summary-line {
+  height: 14px;
+  width: 80%;
+  margin-bottom: 12px;
+}
+
+.summary-line.short {
+  width: 50%;
+}
+
+/* Button */
+.checkout-button {
+  height: 45px;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 8px;
+}
