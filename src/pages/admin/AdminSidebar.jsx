@@ -41,6 +41,7 @@ export default function AdminSidebar({ onLinkClick }) {
   return (
     <div className="sb-menu" ref={sidebarRef}>
 
+      {/* DASHBOARD */}
       <NavLink to="/admin" onClick={handleLinkClick}>
         <FaTachometerAlt /> <span>Dashboard</span>
       </NavLink>
@@ -66,17 +67,48 @@ export default function AdminSidebar({ onLinkClick }) {
         )}
       </div>
 
+      {/* ORDERS */}
       <NavLink to="/admin/orders" onClick={handleLinkClick}>
         <FaShoppingCart /> <span>Orders</span>
       </NavLink>
 
-      <NavLink to="/admin/customers" onClick={handleLinkClick}>
-        <FaUsers /> <span>Customers</span>
+      {/* USERS */}
+      <NavLink to="/admin/users" onClick={handleLinkClick}>
+        <FaUsers /> <span>Users</span>
       </NavLink>
 
+      {/* ANALYTICS */}
       <NavLink to="/admin/analytics" onClick={handleLinkClick}>
         <FaChartLine /> <span>Analytics</span>
       </NavLink>
+
+      {/* 🔥 PRE-ORDER (NEW) */}
+      <div className="sb-section">
+        <button
+          onClick={() => handleToggle("preorder")}
+          className={`sb-dropdown-btn ${openMenu === "preorder" ? "open" : ""}`}
+        >
+          <FaBox /> <span>Pre-Order</span> <FaCaretDown />
+        </button>
+
+        {openMenu === "preorder" && (
+          <div className="sb-dropdown-menu">
+
+            <NavLink to="/admin/preorder/create" onClick={handleLinkClick}>
+              Create Pre-Order
+            </NavLink>
+
+            <NavLink to="/admin/preorder" onClick={handleLinkClick}>
+              All Pre-Orders
+            </NavLink>
+
+            <NavLink to="/admin/preorder/enquiries" onClick={handleLinkClick}>
+              Enquiries
+            </NavLink>
+
+          </div>
+        )}
+      </div>
 
       {/* BANNERS */}
       <div className="sb-section">

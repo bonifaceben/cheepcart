@@ -1,0 +1,41 @@
+/* HEADER */
+.cc-dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+/* LEFT */
+.cc-dash-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* RIGHT */
+.cc-dash-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+/* MENU BUTTON */
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* MOBILE ONLY */
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+}
+
+

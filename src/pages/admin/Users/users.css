@@ -1,0 +1,107 @@
+.users-container {
+  padding: 20px;
+  overflow-x: auto; /* 🔥 prevents layout breaking */
+}
+
+/* TABLE */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  min-width: 600px; /* 🔥 allows horizontal scroll on mobile */
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* SELECT */
+.users-table select {
+  padding: 6px;
+  border-radius: 4px;
+}
+
+/* STATUS */
+.active {
+  color: green;
+  font-weight: 600;
+}
+
+.inactive {
+  color: red;
+  font-weight: 600;
+}
+
+/* BUTTONS */
+.deactivate,
+.activate {
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.deactivate {
+  background: red;
+  color: white;
+}
+
+.activate {
+  background: green;
+  color: white;
+}
+
+/* SEARCH */
+.users-search {
+  margin-bottom: 15px;
+}
+
+.users-search input {
+  width: 300px;
+  max-width: 100%; /* 🔥 responsive */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  .users-container {
+    padding: 10px;
+  }
+
+  /* TABLE TEXT SMALLER */
+  .users-table th,
+  .users-table td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  /* BUTTON STACK */
+  .users-table td button {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  /* SEARCH FULL WIDTH */
+  .users-search input {
+    width: 100%;
+  }
+
+}
+
+/* ================= EXTRA SMALL ================= */
+@media (max-width: 480px) {
+
+  /* OPTIONAL: STACK ROWS */
+  .users-table {
+    min-width: 500px;
+  }
+
+}

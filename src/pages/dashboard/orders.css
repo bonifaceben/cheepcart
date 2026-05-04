@@ -1,0 +1,329 @@
+/* ===== CONTAINER ===== */
+.orders-container {
+  padding: 20px;
+}
+
+/* ===== CARD ===== */
+.order-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.order-card:hover {
+  transform: translateY(-3px);
+}
+
+/* ===== HEADER ===== */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.order-header strong {
+  font-size: 15px;
+}
+
+.order-date {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ===== STATUS ===== */
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+/* Order Status Colors */
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.processing {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status.delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* ===== ITEMS ===== */
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ITEM */
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* IMAGE */
+.order-item img {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f5f5f5;
+}
+
+/* TEXT */
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-info p {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.item-info small {
+  font-size: 12px;
+  color: #777;
+}
+
+/* ===== FOOTER ===== */
+.order-footer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* ===== PAYMENT STATUS ===== */
+.payment {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.payment.paid {
+  background: #d4edda;
+  color: #155724;
+}
+
+.payment.unpaid {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .order-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .order-item img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .item-info p {
+    font-size: 13px;
+  }
+
+}
+
+/* ===== EXTRA SMALL ===== */
+@media (max-width: 480px) {
+
+  .orders-container {
+    padding: 10px;
+  }
+
+  .order-card {
+    padding: 12px;
+  }
+
+}
+
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  border: 1px solid #ff6b00;
+}
+
+
+/* TRACKING BOX */
+.tracking-box {
+  background: #f3f4f6;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* TRACKING NUMBER */
+.tracking-number {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 5px 0;
+  color: #f46e00;
+}
+
+/* STATUS */
+.shipment-status {
+  font-size: 13px;
+  color: #555555;
+}
+
+
+.order-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* CANCEL */
+.cancel-btn {
+  background: #fff;
+  color: #d9534f;
+  border: 1px solid #d9534f;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.cancel-btn:hover {
+  background: #d9534f;
+  color: #fff;
+}
+
+/* DELETE */
+.delete-btn {
+  background: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ACTION BUTTONS */
+.order-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* CANCEL */
+.cancel-btn {
+  background: #fff;
+  color: #d9534f;
+  border: 1px solid #d9534f;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.cancel-btn:hover {
+  background: #d9534f;
+  color: #fff;
+}
+
+/* DELETE */
+.delete-btn {
+  background: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+  animation: scaleIn 0.2s ease;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.btn-secondary {
+  background: #eee;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

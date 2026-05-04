@@ -15,6 +15,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout"; // ✅ ADDED
 import CheckoutSummary from "./pages/CheckoutSummary";
+import Category from "./pages/Category";
 
 
 // ================= BANNERS =================
@@ -32,6 +33,8 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 // ================= CUSTOMER DASHBOARD =================
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Profile from "./pages/dashboard/Profile";
+import MyOrders from "./pages/dashboard/MyOrders";
+import OrderDetails from "./pages/dashboard/OrderDetails";
 
 
 // ================= ADMIN DASHBOARD =================
@@ -44,6 +47,10 @@ import DeleteCategory from "./pages/admin/Categories/DeleteCategory";
 import AdminCreateProduct from "./pages/admin/Products/AdminCreateProduct";
 import AdminProductList from "./pages/admin/Products/AdminProductList";
 import AdminUpdateProduct from "./pages/admin/Products/AdminUpdateProduct";
+import Users from "./pages/admin/Users/Users";
+import CreatePreOrder from "./pages/admin/CreatePreOrder";
+import AdminOrders from "./pages/admin/Orders/AdminOrders";
+
 
 
 // ================= PRODUCT DETAILS =================
@@ -63,6 +70,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/product/:slug" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/category/:slug" element={<Category />} />
 
             {/* ✅ CHECKOUT ROUTE (PROTECTED) */}
             <Route
@@ -111,6 +119,8 @@ function App() {
             }
           >
             <Route index element={<Profile />} />
+            <Route path="orders" element={<MyOrders />} />
+            <Route path="orders/:id" element={<OrderDetails />} />
           </Route>
 
           {/* ================= ADMIN DASHBOARD ================= */}
@@ -129,6 +139,7 @@ function App() {
   <Route path="categories" element={<CategoriesList />} />
   <Route path="categories/update/:categoryId" element={<UpdateCategory />} />
   <Route path="categories/delete/:categoryId" element={<DeleteCategory />} />
+  
 
   {/* Products */}
   <Route path="products/create" element={<AdminCreateProduct />} />
@@ -140,6 +151,15 @@ function App() {
   <Route path="side-banners/create" element={<CreateSideBanner />} />
   <Route path="banners/update/:bannerId" element={<UpdateBanner />} />
   <Route path="banners" element={<BannerList />} />
+
+    {/* 🔥 USERS (NEW) */}
+  <Route path="users" element={<Users />} />
+
+  {/* 🔥 create -preorder*/}
+  <Route path="preorder/create" element={<CreatePreOrder />} />
+
+  {/* 🔥 all orders */}
+  <Route path="orders" element={<AdminOrders />} />
 
 </Route>
 

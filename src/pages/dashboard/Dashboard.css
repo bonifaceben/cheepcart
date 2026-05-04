@@ -1,43 +1,191 @@
+/* ===== DASHBOARD BASE ===== */
 .cc-dashboard {
   background: #f5f5f5;
   min-height: 100vh;
   padding-top: 20px;
 }
 
+/* ===== SIDEBAR (DESKTOP) ===== */
 .cc-dashboard-sidebar {
   background: #fff;
   border-right: 1px solid #eee;
-  min-height: 90vh;
+  min-height: 100vh;
   padding: 20px 0;
 }
 
+/* ===== CONTENT ===== */
 .cc-dashboard-content {
   padding: 30px;
 }
 
+/* ===== SIDEBAR INNER ===== */
 .cc-sidebar {
   padding: 0 20px;
 }
 
+/* ===== USER SECTION ===== */
 .cc-sidebar-user {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 30px;
-  font-size: 16px;
-}
-
-.cc-sidebar .nav-link {
-  color: #333;
-  padding: 12px 0;
+  gap: 12px;
+  margin-bottom: 25px;
+  font-size: 15px;
   font-weight: 500;
 }
 
+/* ===== NAV LINKS ===== */
+.cc-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #444;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* HOVER */
+.cc-sidebar .nav-link:hover {
+  background: #f3f4f6;
+  color: #f68b1e;
+}
+
+/* ACTIVE */
 .cc-sidebar .nav-link.active {
+  background: #fff3e8;
   color: #f68b1e;
   font-weight: 600;
 }
 
-.cc-sidebar .nav-link:hover {
-  color: #f68b1e;
+/* ===== DIVIDER ===== */
+.cc-sidebar hr {
+  margin: 20px 0;
+  border-color: #eee;
 }
+
+/* ===== MOBILE SIDEBAR ===== */
+.cc-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  width: 80%;
+  max-width: 280px;
+  height: 100%;
+  background: #fff;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  padding: 20px;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+}
+
+/* SHOW */
+.cc-sidebar-overlay.show {
+  transform: translateX(0);
+}
+
+/* ===== OVERLAY (CLICK OUTSIDE) ===== */
+.cc-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+  .cc-dashboard-content {
+    padding: 15px;
+  }
+
+  .cc-dashboard-sidebar {
+    display: none;
+  }
+}
+
+/* ===== SMALL MOBILE ===== */
+@media (max-width: 480px) {
+  .cc-sidebar-overlay {
+    width: 85%;
+  }
+}
+
+/* ===== MOBILE HEADER ===== */
+.cc-sidebar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* HIDE HEADER ON DESKTOP */
+@media (min-width: 768px) {
+  .cc-sidebar-top {
+    display: none;
+  }
+}
+
+/* ===== MOBILE TOGGLE BUTTON ===== */
+.cc-mobile-toggle {
+  
+  top: 80px; /* adjust if header height changes */
+  left: 15px;
+  z-index: 1100;
+
+  width: 50px;
+  height: 50px;
+
+  background: linear-gradient(135deg, #ff6b00, #ff8c42);
+  color: #fff;
+
+  border: none;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  transition: all 0.2s ease;
+  margin-left: 30px;
+}
+
+/* ICON SIZE */
+.cc-mobile-toggle svg {
+  font-size: 22px;
+}
+
+/* HOVER */
+.cc-mobile-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* CLICK EFFECT */
+.cc-mobile-toggle:active {
+  transform: scale(0.95);
+}
+
+/* HIDE ON DESKTOP */
+@media (min-width: 768px) {
+  .cc-mobile-toggle {
+    display: none;
+  }
+}
+
+

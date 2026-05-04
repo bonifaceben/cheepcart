@@ -1,0 +1,55 @@
+.admin-orders-container {
+  padding: 20px;
+}
+
+.order-filter {
+  margin-bottom: 15px;
+}
+
+.order-filter select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.orders-table {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.orders-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+/* STATUS COLORS */
+.status.pending { background: #fff3cd; }
+.status.processing { background: #cfe2ff; }
+.status.shipped { background: #d1e7dd; }
+.status.delivered { background: #198754; color: #fff; }
+.status.cancelled { background: #dc3545; color: #fff; }
+
+/* PAYMENT */
+.payment.pending { color: orange; }
+.payment.paid { color: green; }
+.payment.failed { color: red; }
+
+.empty {
+  margin-top: 20px;
+  color: #777;
+}

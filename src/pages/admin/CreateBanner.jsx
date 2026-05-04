@@ -1,42 +1,35 @@
 import { useState } from "react";
 import { API_BASE_URL } from "../../config/api";
 import { useAuth } from "../../context/AuthContext";
-import "./createbanner.css"
+import "./preorder-admin.css";
 
-export default function CreateBanner() {
+export default function CreatePreOrder() {
   const { token } = useAuth();
 
   const [form, setForm] = useState({
-    type: "hero",
-    title: "",
-    subtitle: "",
-    link: "",
-    order: 1,
+    name: "",
+    description: "",
+    price: "",
+    status: "available",
+    displayOrder: 1,
   });
 
-  const [files, setFiles] = useState([]);
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  }
+  };
 
-  function handleFileChange(e) {
-    const selectedFiles = Array.from(e.target.files);
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
-    if (selectedFiles.length > 5) {
-      alert("Max 5 files allowed");
-      return;
-    }
-
-    setFiles(selectedFiles);
-  }
-
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (files.length === 0) {
-      alert("Please upload at least one media file");
+    if (!file) {
+      alert("Please upload an image");
       return;
     }
 
@@ -45,17 +38,15 @@ export default function CreateBanner() {
 
       const formData = new FormData();
 
-      // TEXT FIELDS
+      // TEXT
       Object.keys(form).forEach((key) => {
         formData.append(key, form[key]);
       });
 
-      // FILES (IMPORTANT: SAME KEY = media)
-      files.forEach((file) => {
-        formData.append("media", file);
-      });
+      // FILE
+      formData.append("image", file);
 
-      const res = await fetch(`${API_BASE_URL}/banners`, {
+      const res = await fetch(`${API_BASE_URL}/pre-order-products`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,88 +56,88 @@ export default function CreateBanner() {
 
       const data = await res.json();
 
-      if (data.success) {
-        alert("Banner uploaded successfully");
+      if (res.ok) {
+        alert("Pre-order created successfully!");
 
-        // RESET
         setForm({
-          type: "hero",
-          title: "",
-          subtitle: "",
-          link: "",
-          order: 1,
+          name: "",
+          description: "",
+          price: "",
+          status: "available",
+          displayOrder: 1,
         });
-        setFiles([]);
+
+        setFile(null);
       } else {
-        alert(data.message || "Upload failed");
+        alert(data.message || "Error creating product");
       }
+
     } catch (err) {
       console.error(err);
       alert("Something went wrong");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="admin-form-container">
-      <h2>Create Banner</h2>
+    <div className="preorder-admin-container">
+      <h2>Create Pre-Order Product</h2>
 
-      <form onSubmit={handleSubmit} className="admin-form">
+      <form onSubmit={handleSubmit} className="preorder-form">
 
-        {/* TYPE */}
-        <select name="type" value={form.type} onChange={handleChange}>
-          <option value="hero">Hero</option>
-          <option value="secondary">Secondary</option>
-        </select>
-
-        {/* TITLE */}
         <input
           type="text"
-          name="title"
-          placeholder="Title"
-          value={form.title}
+          name="name"
+          placeholder="Product Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={form.description}
           onChange={handleChange}
         />
 
-        {/* SUBTITLE */}
-        <input
-          type="text"
-          name="subtitle"
-          placeholder="Subtitle"
-          value={form.subtitle}
-          onChange={handleChange}
-        />
-
-        {/* LINK */}
-        <input
-          type="text"
-          name="link"
-          placeholder="/shop"
-          value={form.link}
-          onChange={handleChange}
-        />
-
-        {/* ORDER */}
         <input
           type="number"
-          name="order"
-          value={form.order}
+          name="price"
+          placeholder="Price (optional)"
+          value={form.price}
           onChange={handleChange}
         />
 
-        {/* FILES */}
         <input
           type="file"
-          multiple
-          accept="image/*,video/*,.svg"
+          accept="image/*"
           onChange={handleFileChange}
+          required
         />
 
-        {/* SUBMIT */}
+        <select
+          name="status"
+          value={form.status}
+          onChange={handleChange}
+        >
+          <option value="available">Available</option>
+          <option value="coming_soon">Coming Soon</option>
+          <option value="closed">Closed</option>
+        </select>
+
+        <input
+          type="number"
+          name="displayOrder"
+          value={form.displayOrder}
+          onChange={handleChange}
+        />
+
         <button type="submit" disabled={loading}>
-          {loading ? "Uploading..." : "Create Banner"}
+          {loading ? "Uploading..." : "Create Product"}
         </button>
+
       </form>
     </div>
   );

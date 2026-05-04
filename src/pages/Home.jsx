@@ -11,6 +11,10 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // 🔥 CATEGORIES
+  const [categories, setCategories] = useState([]);
+  const [catLoading, setCatLoading] = useState(true);
+
   // 🔥 MAIN BANNER
   const [banners, setBanners] = useState([]);
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -43,6 +47,32 @@ export default function Home() {
     };
 
     fetchProducts();
+  }, []);
+
+  // ================= CATEGORIES =================
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setCatLoading(true);
+
+        const res = await fetch(`${API_BASE_URL}/categories`);
+        const data = await res.json();
+
+        if (data.success) {
+          const active = data.categories
+            .filter(c => c.isActive)
+            .sort((a, b) => a.order - b.order);
+
+          setCategories(active);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setCatLoading(false);
+      }
+    };
+
+    fetchCategories();
   }, []);
 
   // ================= MAIN BANNERS =================
@@ -125,21 +155,21 @@ export default function Home() {
       <Container fluid className="cc-home">
         <div className="cc-home-grid">
 
-          {/* LEFT */}
+          {/* ================= CATEGORIES ================= */}
           <aside className="cc-categories">
-            {[
-              "Appliances",
-              "Phones & Tablets",
-              "Health & Beauty",
-              "Electronics",
-              "Fashion",
-              "Supermarket",
-              "Other categories",
-            ].map((cat, i) => (
-              <div key={i} className="cc-category-item">
-                {cat}
-              </div>
-            ))}
+            {catLoading ? (
+              <p style={{ padding: "10px" }}>Loading...</p>
+            ) : (
+              categories.map((cat) => (
+                <div
+                  key={cat._id}
+                  className="cc-category-item"
+                  onClick={() => navigate(`/category/${cat.slug}`)}
+                >
+                  {cat.name}
+                </div>
+              ))
+            )}
           </aside>
 
           {/* ================= MAIN BANNER ================= */}
@@ -175,7 +205,6 @@ export default function Home() {
                   })}
                 </div>
 
-                {/* DOTS */}
                 <div className="cc-banner-dots">
                   {banners.map((_, i) => (
                     <span
@@ -188,7 +217,6 @@ export default function Home() {
 
               </div>
             )}
-
           </main>
 
           {/* ================= SIDE BANNER ================= */}
@@ -237,7 +265,7 @@ export default function Home() {
           ) : error ? (
             <p className="error">{error}</p>
           ) : (
-            products.map((product) => {
+            products.slice(0, 12).map((product) => {
               const discountPercent =
                 product.comparePrice &&
                 Number(product.comparePrice) > Number(product.price)

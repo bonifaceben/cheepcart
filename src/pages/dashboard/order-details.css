@@ -1,0 +1,168 @@
+/* ===== CONTAINER ===== */
+.order-details {
+  padding: 20px;
+  background: #f9fafb;
+  min-height: 100%;
+}
+
+/* ===== CARD ===== */
+.order-details {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* ===== HEADER ===== */
+.order-details h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.date {
+  color: #6b7280;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* ===== STATUS ROW ===== */
+.status-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* STATUS BADGE */
+.status,
+.payment {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+/* ORDER STATUS COLORS */
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.processing {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status.delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* PAYMENT */
+.payment.paid {
+  background: #d4edda;
+  color: #155724;
+}
+
+.payment.unpaid {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* ===== SECTION ===== */
+.section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.section h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/* ===== ITEMS ===== */
+.item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.item img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f3f4f6;
+}
+
+/* ITEM TEXT */
+.item p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.item small {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.item strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+/* ===== SUMMARY ===== */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.summary-row.total {
+  font-weight: bold;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+/* ===== ADDRESS ===== */
+.section p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .order-details {
+    padding: 10px;
+  }
+
+  .item img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .summary-row {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-row {
+    flex-direction: column;
+  }
+
+  .item {
+    align-items: flex-start;
+  }
+}
