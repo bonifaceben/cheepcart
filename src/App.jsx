@@ -16,6 +16,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout"; // ✅ ADDED
 import CheckoutSummary from "./pages/CheckoutSummary";
 import Category from "./pages/Category";
+import Search from "./pages/Search";
 
 
 // ================= BANNERS =================
@@ -35,6 +36,7 @@ import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Profile from "./pages/dashboard/Profile";
 import MyOrders from "./pages/dashboard/MyOrders";
 import OrderDetails from "./pages/dashboard/OrderDetails";
+import Wishlist from "./pages/dashboard/Wishlist";
 
 
 // ================= ADMIN DASHBOARD =================
@@ -71,6 +73,7 @@ function App() {
             <Route path="/product/:slug" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/category/:slug" element={<Category />} />
+            <Route path="/search" element={<Search />} />
 
             {/* ✅ CHECKOUT ROUTE (PROTECTED) */}
             <Route
@@ -121,7 +124,9 @@ function App() {
             <Route index element={<Profile />} />
             <Route path="orders" element={<MyOrders />} />
             <Route path="orders/:id" element={<OrderDetails />} />
+            <Route path="wishlist" element={<Wishlist />} />
           </Route>
+          
 
           {/* ================= ADMIN DASHBOARD ================= */}
           <Route

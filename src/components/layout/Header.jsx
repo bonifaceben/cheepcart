@@ -1,34 +1,73 @@
 import { useState } from "react";
-import { Navbar, Container, Form, Button, Dropdown } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Form,
+  Button,
+  Dropdown
+} from "react-bootstrap";
+
 import { Link, useNavigate } from "react-router-dom";
-import { Person, QuestionCircle, Cart } from "react-bootstrap-icons";
+
+import {
+  Person,
+  QuestionCircle,
+  Cart
+} from "react-bootstrap-icons";
+
 import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
+
 import CategoryDrawer from "./CategoryDrawer";
+
 import "./Header.css";
+
 import logo from "../../assets/logo.png";
-import { useCart } from "../../context/CartContext";  // Import the CartContext
 
 export default function Header() {
+
   const [showCategories, setShowCategories] = useState(false);
+
+  // 🔥 SEARCH STATE
+  const [search, setSearch] = useState("");
+
   const { user, isAuthenticated, logout } = useAuth();
-  
-  const { cartItemCount } = useCart(); // Access the cartItemCount from CartContext
+
+  const { cartItemCount } = useCart();
+
   const navigate = useNavigate();
 
+  // ================= LOGOUT =================
   function handleLogout() {
     logout();
     navigate("/", { replace: true });
   }
 
-  // Extract first name
+  // ================= SEARCH =================
+  function handleSearch(e) {
+
+    e.preventDefault();
+
+    // EMPTY SEARCH
+    if (!search.trim()) return;
+
+    // GO TO SEARCH PAGE
+    navigate(`/search?keyword=${search}`);
+
+    // OPTIONAL CLEAR INPUT
+    // setSearch("");
+  }
+
+  // FIRST NAME
   const firstName = user?.name?.split(" ")[0];
 
   return (
     <>
       <Navbar className="cc-header" bg="white">
+
         <Container fluid className="cc-header-inner">
 
-          {/* Menu toggle */}
+          {/* ================= MENU TOGGLE ================= */}
           <button
             className="cc-menu-toggle"
             onClick={() => setShowCategories(true)}
@@ -36,32 +75,45 @@ export default function Header() {
             ☰
           </button>
 
-          {/* Logo */}
-         <Link to="/">
-  <img
-    src={logo}
-    alt="Cheepcart Logo"
-    className="cc-main-logo"
-    style={{ cursor: "pointer" }}
-  />
-</Link>
+          {/* ================= LOGO ================= */}
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Cheepcart Logo"
+              className="cc-main-logo"
+              style={{ cursor: "pointer" }}
+            />
+          </Link>
 
-          {/* Search */}
-          <Form className="cc-search">
+          {/* ================= SEARCH ================= */}
+          <Form
+            className="cc-search"
+            onSubmit={handleSearch}
+          >
+
             <input
               type="text"
               placeholder="Search products, brands and categories"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <Button className="cc-search-btn">Search</Button>
+
+            <Button
+              type="submit"
+              className="cc-search-btn"
+            >
+              Search
+            </Button>
+
           </Form>
 
-          {/* Right actions */}
+          {/* ================= RIGHT ACTIONS ================= */}
           <div className="cc-header-actions">
 
-            {/* ACCOUNT DROPDOWN */}
+            {/* ================= ACCOUNT ================= */}
             <Dropdown align="end">
 
-              {/* Desktop toggle */}
+              {/* DESKTOP */}
               <Dropdown.Toggle
                 variant="link"
                 className="cc-account-toggle cc-action-text"
@@ -71,7 +123,7 @@ export default function Header() {
                   : "Account"}
               </Dropdown.Toggle>
 
-              {/* Mobile toggle */}
+              {/* MOBILE */}
               <Dropdown.Toggle
                 variant="link"
                 className="cc-account-toggle cc-action-icon"
@@ -86,6 +138,7 @@ export default function Header() {
                     <Dropdown.Item as={Link} to="/login">
                       Sign In
                     </Dropdown.Item>
+
                     <Dropdown.Item as={Link} to="/register">
                       Register
                     </Dropdown.Item>
@@ -96,11 +149,11 @@ export default function Header() {
                       My Account
                     </Dropdown.Item>
 
-                    <Dropdown.Item as={Link} to="/orders">
+                    <Dropdown.Item as={Link} to="/dashboard/orders">
                       Orders
                     </Dropdown.Item>
 
-                    <Dropdown.Item as={Link} to="/wishlist">
+                    <Dropdown.Item as={Link} to="/dashboard/wishlist">
                       Wishlist
                     </Dropdown.Item>
 
@@ -115,23 +168,39 @@ export default function Header() {
               </Dropdown.Menu>
             </Dropdown>
 
-            {/* Help */}
-            <span className="cc-action-text">Help ▾</span>
-            <QuestionCircle className="cc-action-icon" size={20} />
+            {/* ================= HELP ================= */}
+            <span className="cc-action-text">
+              Help ▾
+            </span>
 
-            {/* Cart */}
-            <span className="cart-wrapper" onClick={() => navigate("/cart")}>
-  <Cart size={20} />
-  {cartItemCount > 0 && (
-    <span className="cart-item-count">{cartItemCount}</span>
-  )}
-</span>
-            
+            <QuestionCircle
+              className="cc-action-icon"
+              size={20}
+            />
+
+            {/* ================= CART ================= */}
+            <span
+              className="cart-wrapper"
+              onClick={() => navigate("/cart")}
+            >
+
+              <Cart size={20} />
+
+              {cartItemCount > 0 && (
+                <span className="cart-item-count">
+                  {cartItemCount}
+                </span>
+              )}
+
+            </span>
+
           </div>
 
         </Container>
+
       </Navbar>
 
+      {/* ================= CATEGORY DRAWER ================= */}
       <CategoryDrawer
         show={showCategories}
         onClose={() => setShowCategories(false)}

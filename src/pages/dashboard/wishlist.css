@@ -1,0 +1,295 @@
+/* ================= PAGE ================= */
+
+.wishlist-page {
+  padding: 20px;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* ================= HEADER ================= */
+
+.wishlist-header {
+  background: #fff;
+  border-radius: 12px;
+
+  padding: 20px;
+  margin-bottom: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.wishlist-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wishlist-icon {
+  color: #ff4d6d;
+  font-size: 24px;
+}
+
+.wishlist-title h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.wishlist-title p {
+  margin-top: 5px;
+  color: #777;
+  font-size: 14px;
+}
+
+/* ================= BUTTONS ================= */
+
+.clear-wishlist-btn {
+  height: 42px;
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #ff4d6d;
+  color: #fff;
+
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.clear-wishlist-btn:hover {
+  opacity: 0.9;
+}
+
+.view-product-btn {
+  height: 38px;
+  padding: 0 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #f68b1e;
+  color: #fff;
+
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+
+  transition: 0.3s;
+}
+
+.view-product-btn:hover {
+  opacity: 0.9;
+}
+
+.remove-btn {
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #fff0f3;
+  color: #ff4d6d;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s;
+}
+
+.remove-btn:hover {
+  background: #ffe3e8;
+}
+
+/* ================= GRID ================= */
+
+.wishlist-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ================= CARD ================= */
+
+.wishlist-card {
+  background: #fff;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 12px;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+  transition: 0.3s;
+}
+
+.wishlist-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* ================= IMAGE ================= */
+
+.wishlist-image-box {
+  width: 110px;
+  height: 110px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  cursor: pointer;
+}
+
+.wishlist-image-box img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  display: block;
+}
+
+/* ================= CONTENT ================= */
+
+.wishlist-content {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wishlist-content h4 {
+  font-size: 15px;
+  margin-bottom: 10px;
+
+  cursor: pointer;
+  color: #222;
+
+  line-height: 1.4;
+}
+
+.wishlist-price {
+  color: #f68b1e;
+  font-size: 18px;
+  font-weight: 700;
+
+  margin-bottom: 15px;
+}
+
+/* ================= ACTIONS ================= */
+
+.wishlist-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ================= EMPTY ================= */
+
+.empty-wishlist {
+  background: #fff;
+  border-radius: 12px;
+
+  padding: 60px 20px;
+
+  text-align: center;
+}
+
+.empty-heart {
+  font-size: 50px;
+  color: #ff4d6d;
+
+  margin-bottom: 15px;
+}
+
+.empty-wishlist h3 {
+  margin-bottom: 10px;
+}
+
+.empty-wishlist p {
+  color: #777;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  .wishlist-page {
+    padding: 12px;
+  }
+
+  .wishlist-header {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .wishlist-title h2 {
+    font-size: 20px;
+  }
+
+  .wishlist-card {
+    align-items: flex-start;
+  }
+
+  .wishlist-image-box {
+    width: 90px;
+    height: 90px;
+  }
+
+  .wishlist-content h4 {
+    font-size: 14px;
+  }
+
+  .wishlist-price {
+    font-size: 16px;
+  }
+
+  .wishlist-actions {
+    flex-wrap: wrap;
+  }
+
+  .view-product-btn {
+    font-size: 12px;
+    padding: 0 12px;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width: 480px) {
+
+  .wishlist-card {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .wishlist-image-box {
+    width: 80px;
+    height: 80px;
+  }
+
+  .wishlist-content h4 {
+    font-size: 13px;
+  }
+
+  .wishlist-price {
+    font-size: 15px;
+  }
+
+  .view-product-btn {
+    width: 100%;
+  }
+}

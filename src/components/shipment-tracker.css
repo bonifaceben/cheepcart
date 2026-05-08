@@ -1,0 +1,119 @@
+/* ===== CONTAINER ===== */
+.tracking-container {
+  margin-top: 15px;
+}
+
+/* ===== BUTTON ===== */
+.track-btn {
+  padding: 10px 14px;
+  background: #0d6efd;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.track-btn:hover {
+  background: #0b5ed7;
+}
+
+.track-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ===== RESULT CARD ===== */
+.tracking-result {
+  margin-top: 15px;
+  padding: 18px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ===== STATUS ===== */
+.tracking-result h4 {
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* ===== WARNING ===== */
+.tracking-warning {
+  color: #f68b1e;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* ===== DETAILS ===== */
+.tracking-result p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* ===== TIMELINE ===== */
+.timeline {
+  margin-top: 20px;
+  position: relative;
+  padding-left: 20px;
+}
+
+/* vertical line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: #eee;
+}
+
+/* ===== TIMELINE ITEM ===== */
+.timeline-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+/* DOT */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ccc;
+  margin-top: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+/* COMPLETED */
+.dot.done {
+  background: #198754;
+}
+
+/* TEXT */
+.timeline-title {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.timeline small {
+  color: #777;
+  font-size: 12px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .tracking-result {
+    padding: 12px;
+  }
+
+  .track-btn {
+    width: 100%;
+  }
+}

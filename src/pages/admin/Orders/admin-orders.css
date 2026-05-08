@@ -2,54 +2,376 @@
   padding: 20px;
 }
 
-.order-filter {
+/* ================= HEADER ================= */
+.admin-orders-container h2 {
   margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* ================= FILTER ================= */
+.order-filter {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .order-filter select {
-  padding: 8px;
-  border-radius: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
   border: 1px solid #ddd;
+  background: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
+.order-filter select:focus {
+  outline: none;
+  border-color: #f68b1e;
+}
+
+/* ================= TABLE ================= */
 .orders-table {
   overflow-x: auto;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .orders-table table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 700px;
 }
 
+/* HEADER */
+.orders-table th {
+  background: #fafafa;
+  font-weight: 600;
+  font-size: 13px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+/* CELLS */
 .orders-table th,
 .orders-table td {
-  padding: 12px;
+  padding: 14px 12px;
   border-bottom: 1px solid #eee;
-  text-align: left;
 }
 
+/* ROW HOVER */
+.orders-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+/* ================= STATUS BADGES ================= */
 .status {
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 5px 10px;
+  border-radius: 20px;
   font-size: 12px;
+  font-weight: 500;
   text-transform: capitalize;
+  display: inline-block;
 }
 
 /* STATUS COLORS */
-.status.pending { background: #fff3cd; }
-.status.processing { background: #cfe2ff; }
-.status.shipped { background: #d1e7dd; }
-.status.delivered { background: #198754; color: #fff; }
-.status.cancelled { background: #dc3545; color: #fff; }
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
 
-/* PAYMENT */
-.payment.pending { color: orange; }
-.payment.paid { color: green; }
-.payment.failed { color: red; }
+.status.processing {
+  background: #cfe2ff;
+  color: #084298;
+}
 
+.status.shipped {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.status.delivered {
+  background: #198754;
+  color: #fff;
+}
+
+.status.cancelled {
+  background: #dc3545;
+  color: #fff;
+}
+
+/* ================= PAYMENT ================= */
+.payment {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.payment.pending {
+  color: #f68b1e;
+}
+
+.payment.paid {
+  color: #198754;
+}
+
+.payment.failed {
+  color: #dc3545;
+}
+
+/* ================= TRACKING ================= */
+.tracking {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #555;
+  background: #f5f5f5;
+  padding: 4px 6px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* ================= EMPTY STATE ================= */
 .empty {
   margin-top: 20px;
   color: #777;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ================= PAGINATION ================= */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border: none;
+  background: #f68b1e;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pagination button:hover {
+  background: #d97706;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+
+  .admin-orders-container {
+    padding: 10px;
+  }
+
+  .order-filter {
+    flex-direction: column;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+}
+
+.retry-btn {
+  margin-top: 6px;
+  padding: 5px 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #f68b1e;
+  color: #fff;
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  background: #d97706;
+}
+
+.retry-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ===== WRAPPER ===== */
+.tracker-wrapper {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ===== INPUT SECTION ===== */
+.tracker-input-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tracker-input-box input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.tracker-input-box input:focus {
+  outline: none;
+  border-color: #fda90d;
+}
+
+/* BUTTON */
+.tracker-input-box button {
+  padding: 12px 18px;
+  background: #fd9d0d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.tracker-input-box button:hover {
+  background: #d7780b;
+}
+
+.tracker-input-box button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ===== RESULT CARD ===== */
+.tracking-result {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+/* STATUS */
+.tracking-result h4 {
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* ===== STATUS COLORS ===== */
+.tracking-result h4 {
+  color: #333;
+}
+
+.tracking-result h4.delivered {
+  color: #198754;
+}
+
+.tracking-result h4.in_transit {
+  color: #0d6efd;
+}
+
+.tracking-result h4.pending {
+  color: #ffc107;
+}
+
+.tracking-result h4.issue {
+  color: #dc3545;
+}
+
+/* ===== WARNING ===== */
+.tracking-warning {
+  color: #f68b1e;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* ===== DETAILS ===== */
+.tracking-result p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* ===== TIMELINE ===== */
+.timeline {
+  margin-top: 15px;
+  padding-left: 20px;
+  position: relative;
+}
+
+/* vertical line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: #e5e7eb;
+}
+
+/* ITEM */
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+/* DOT */
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ccc;
+  margin-top: 5px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ACTIVE */
+.dot.done {
+  background: #198754;
+}
+
+/* TEXT */
+.timeline-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.timeline small {
+  color: #777;
+  font-size: 12px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .tracker-input-box {
+    flex-direction: column;
+  }
+
+  .tracker-input-box button {
+    width: 100%;
+  }
+
+  .tracker-wrapper {
+    padding: 15px;
+  }
 }

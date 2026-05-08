@@ -15,6 +15,9 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [catLoading, setCatLoading] = useState(true);
 
+  // 🔥 CATEGORY PRODUCTS (NEW)
+  const [categoryProducts, setCategoryProducts] = useState({});
+
   // 🔥 MAIN BANNER
   const [banners, setBanners] = useState([]);
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -74,6 +77,35 @@ export default function Home() {
 
     fetchCategories();
   }, []);
+
+  // ================= CATEGORY PRODUCTS =================
+  useEffect(() => {
+    if (!categories.length) return;
+
+    const fetchCategoryProducts = async () => {
+      try {
+        const results = {};
+
+        for (const cat of categories) {
+          const res = await fetch(
+            `${API_BASE_URL}/products?category=${cat._id}&page=1`
+          );
+
+          const data = await res.json();
+
+          if (res.ok) {
+            results[cat._id] = data.products?.slice(0, 6) || [];
+          }
+        }
+
+        setCategoryProducts(results);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchCategoryProducts();
+  }, [categories]);
 
   // ================= MAIN BANNERS =================
   useEffect(() => {
@@ -164,7 +196,7 @@ export default function Home() {
                 <div
                   key={cat._id}
                   className="cc-category-item"
-                  onClick={() => navigate(`/category/${cat.slug}`)}
+                  onClick={() => navigate(`/category/${cat._id}`)} // ✅ FIXED
                 >
                   {cat.name}
                 </div>
@@ -174,7 +206,6 @@ export default function Home() {
 
           {/* ================= MAIN BANNER ================= */}
           <main className="cc-banner">
-
             {bannerLoading && (
               <div className="cc-banner-loader">
                 <img src={loaderIcon} alt="loading" />
@@ -183,7 +214,6 @@ export default function Home() {
 
             {!bannerLoading && banners.length > 0 && (
               <div className="cc-banner-slider">
-
                 <div
                   className="cc-banner-track"
                   style={{
@@ -204,24 +234,12 @@ export default function Home() {
                     );
                   })}
                 </div>
-
-                <div className="cc-banner-dots">
-                  {banners.map((_, i) => (
-                    <span
-                      key={i}
-                      className={`dot ${i === currentBanner ? "active" : ""}`}
-                      onClick={() => setCurrentBanner(i)}
-                    />
-                  ))}
-                </div>
-
               </div>
             )}
           </main>
 
           {/* ================= SIDE BANNER ================= */}
           <aside className="cc-side-cards">
-
             {sideLoading && (
               <div className="cc-side-loader">
                 <img src={loaderIcon} alt="loading" />
@@ -230,32 +248,28 @@ export default function Home() {
 
             {!sideLoading && sideBanner && (
               <a href={sideBanner.link || "#"} className="cc-side-banner">
-
                 {(() => {
                   const media = sideBanner.mediaItems?.[sideIndex];
 
                   if (!media) return null;
 
                   if (media.resource_type === "video") {
-                    return (
-                      <video src={media.secure_url} autoPlay muted loop className="cc-side-media" />
-                    );
+                    return <video src={media.secure_url} autoPlay muted loop className="cc-side-media" />;
                   }
 
-                  return (
-                    <img src={media.secure_url} alt="side banner" className="cc-side-media" />
-                  );
+                  return <img src={media.secure_url} alt="side banner" className="cc-side-media" />;
                 })()}
-
               </a>
             )}
-
           </aside>
 
         </div>
       </Container>
 
-      {/* ================= PRODUCTS ================= */}
+      {/* ================= FLASH SALES ================= */}
+
+      <div className="home-sections-bg">
+
       <div className="cc-products">
         <h3>Flash Sales</h3>
 
@@ -323,6 +337,85 @@ export default function Home() {
             })
           )}
         </div>
+      </div>
+
+
+
+
+      <div className="cc-category-cards">
+
+  {categories.map((cat) => (
+    <div
+      key={cat._id}
+      className="category-card"
+      onClick={() => navigate(`/category/${cat._id}`)}
+    >
+      <img
+        src={cat.image || ""}
+        alt={cat.name}
+      />
+
+      <p>{cat.name}</p>
+    </div>
+  ))}
+
+</div>
+
+      {/* ================= CATEGORY PRODUCTS ================= */}
+{categories.map((cat) => {
+  const catProducts = categoryProducts[cat._id];
+
+  if (!catProducts || catProducts.length === 0) return null;
+
+  return (
+    <div className="cc-products" key={cat._id}>
+
+      {/* HEADER */}
+      <div className="category-orange-header">
+
+        <h3>{cat.name}</h3>
+
+        <span
+          className="see-all-btn"
+          onClick={() => navigate(`/category/${cat._id}`)}
+        >
+          See All
+        </span>
+
+      </div>
+
+      {/* PRODUCTS */}
+      <div className="product-grid">
+
+        {catProducts.slice(0, 5).map((product) => (
+          <div
+            key={product._id}
+            className="product-item"
+            onClick={() => handleProductClick(product.slug)}
+          >
+
+            <img
+              src={product.images?.[0]?.secure_url || ""}
+              alt={product.name}
+              className="product-image"
+            />
+
+            <div className="product-name">
+              {product.name}
+            </div>
+
+            <div className="product-price">
+              ₦{Number(product.price || 0).toLocaleString()}
+            </div>
+
+          </div>
+        ))}
+
+      </div>
+
+    </div>
+  );
+})}
       </div>
     </>
   );

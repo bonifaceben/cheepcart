@@ -9,6 +9,7 @@
   grid-template-columns: 220px 1fr 180px;
   gap: 16px;
   align-items: stretch;
+  
 }
 
 /* LEFT CATEGORIES */
@@ -428,3 +429,242 @@
     font-size: 11px;
   }
 }
+
+
+/* ================= CATEGORY ORANGE HEADER ================= */
+
+.category-orange-header {
+  background: #fd8e0f;
+  color: #fff;
+  padding: 12px 15px;
+  border-radius: 8px 8px 0 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* TITLE */
+.category-orange-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+/* SEE ALL */
+.see-all-btn {
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgba(255,255,255,0.15);
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.see-all-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+
+/* ================= CATEGORY CARDS ================= */
+
+/* ================= CATEGORY CARDS ================= */
+
+.cc-category-cards {
+  display: flex;
+  gap: 14px;
+  padding: 15px;
+  overflow-x: auto;
+  background: #fff;
+  margin-top: 20px;
+  border-radius: 16px;
+
+  scroll-behavior: smooth;
+}
+
+/* CARD */
+.category-card {
+  flex: 0 0 auto;
+
+  width: 150px; /* SMALLER CARD */
+  cursor: pointer;
+
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+/* IMAGE */
+.category-card img {
+  width: 100%;
+
+  height: 190px; /* SMALLER HEIGHT */
+  object-fit: cover;
+
+  border-radius: 10px;
+
+  display: block;
+}
+
+/* NAME */
+.category-card p {
+  margin-top: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* HOVER */
+.category-card:hover {
+  transform: translateY(-4px);
+}
+
+/* REMOVE SCROLLBAR */
+.cc-category-cards::-webkit-scrollbar {
+  display: none;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 992px) {
+  .category-card {
+    width: 135px;
+  }
+
+  .category-card img {
+    height: 170px;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .cc-category-cards {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .category-card {
+    width: 120px;
+  }
+
+  .category-card img {
+    height: 150px;
+    border-radius: 8px;
+  }
+
+  .category-card p {
+    font-size: 13px;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+  .category-card {
+    width: 110px;
+  }
+
+  .category-card img {
+    height: 135px;
+  }
+
+  .category-card p {
+    font-size: 12px;
+  }
+}
+
+
+/* ================= HOME PURPLE BACKGROUND ================= */
+
+.home-sections-bg {
+  background-image: url("../assets/home-bg.png.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+
+  padding: 20px;
+}
+
+/* OPTIONAL OVERLAY */
+.home-sections-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* ENSURE CONTENT STAYS ABOVE */
+.home-sections-bg > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ================= HOME PURPLE BACKGROUND ================= */
+
+.home-sections-bg {
+  position: relative;
+
+  background-image: url("../assets/home-bg.png.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+
+  padding: 20px;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* OPTIONAL OVERLAY */
+.home-sections-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* ENSURE CONTENT STAYS ABOVE */
+.home-sections-bg > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ================= LARGE DESKTOP ================= */
+@media (min-width: 1400px) {
+  .home-sections-bg {
+    background-size: cover;
+    padding: 30px;
+  }
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 992px) {
+  .home-sections-bg {
+    background-size: cover;
+    background-position: center;
+
+    padding: 15px;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .home-sections-bg {
+    background-size: contain;
+    background-position: top center;
+    background-repeat: repeat-y;
+
+    padding: 10px;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+  .home-sections-bg {
+    background-size: contain;
+    background-position: top center;
+
+    padding: 8px;
+  }
+}
+
+
+

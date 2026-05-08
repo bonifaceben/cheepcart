@@ -63,32 +63,41 @@ const ProductDetails = () => {
   }, [slug]);
 
   // Check wishlist status
-  useEffect(() => {
-    const checkWishlistStatus = async () => {
-      if (!product?._id || !token) return;
+  // ================= CHECK WISHLIST STATUS =================
+useEffect(() => {
+  const checkWishlistStatus = async () => {
 
-      try {
-        const response = await fetch(`${API_BASE_URL}/wishlist`, {
+    if (!product?._id || !token) return;
+
+    try {
+
+      const response = await fetch(
+        `${API_BASE_URL}/users/wishlist`,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data?.wishlist?.products) {
-          const exists = data.wishlist.products.some(
-            (item) => item.product === product._id || item.product?._id === product._id
-          );
-          setIsWishlisted(exists);
         }
-      } catch (error) {
-        console.error("Error checking wishlist:", error);
-      }
-    };
+      );
 
-    checkWishlistStatus();
-  }, [product, token]);
+      const data = await response.json();
+
+      if (response.ok && data?.wishlist) {
+
+        const exists = data.wishlist.some(
+          (item) => item._id === product._id
+        );
+
+        setIsWishlisted(exists);
+      }
+
+    } catch (error) {
+      console.error("Error checking wishlist:", error);
+    }
+  };
+
+  checkWishlistStatus();
+}, [product, token]);
 
   // Check cart quantity for this product
   useEffect(() => {
@@ -146,48 +155,81 @@ const ProductDetails = () => {
   };
 
   // Toggle Wishlist
-  const handleWishlistToggle = async () => {
-    if (!token) {
-      showToast("Please login to use wishlist", "error");
-      return;
-    }
+  // ================= TOGGLE WISHLIST =================
+const handleWishlistToggle = async () => {
 
-    if (!product?._id) return;
+  // USER NOT LOGGED IN
+  if (!token) {
+    showToast("Please login to use wishlist", "error");
+    return;
+  }
 
-    setWishlistLoading(true);
+  // PRODUCT NOT READY
+  if (!product?._id) return;
 
-    try {
-      const endpoint = isWishlisted
-        ? `${API_BASE_URL}/wishlist/remove/${product._id}`
-        : `${API_BASE_URL}/wishlist/add/${product._id}`;
+  setWishlistLoading(true);
 
-      const method = isWishlisted ? "DELETE" : "POST";
+  try {
 
-      const response = await fetch(endpoint, {
-        method,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+    // ================= ADD TO WISHLIST =================
+    if (!isWishlisted) {
+
+      const response = await fetch(
+        `${API_BASE_URL}/users/wishlist/${product._id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
-        setIsWishlisted(!isWishlisted);
-        showToast(
-          isWishlisted ? "Removed from wishlist" : "Added to wishlist"
-        );
+        setIsWishlisted(true);
+        showToast("Added to wishlist");
       } else {
-        showToast(data.message || "Wishlist action failed", "error");
+        showToast(
+          data.message || "Failed to add wishlist",
+          "error"
+        );
       }
-    } catch (error) {
-      console.error("Wishlist error:", error);
-      showToast("Something went wrong with wishlist", "error");
-    } finally {
-      setWishlistLoading(false);
     }
-  };
+
+    // ================= REMOVE FROM WISHLIST =================
+    else {
+
+      const response = await fetch(
+        `${API_BASE_URL}/users/wishlist/${product._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsWishlisted(false);
+        showToast("Removed from wishlist");
+      } else {
+        showToast(
+          data.message || "Failed to remove wishlist",
+          "error"
+        );
+      }
+    }
+
+  } catch (error) {
+    console.error("Wishlist error:", error);
+    showToast("Something went wrong", "error");
+  } finally {
+    setWishlistLoading(false);
+  }
+};
 
   // Add first item to cart
  const handleAddToCart = async () => {
