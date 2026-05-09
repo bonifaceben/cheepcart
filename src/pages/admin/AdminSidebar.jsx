@@ -102,7 +102,7 @@ export default function AdminSidebar({ onLinkClick }) {
               All Pre-Orders
             </NavLink>
 
-            <NavLink to="/admin/preorder/enquiries" onClick={handleLinkClick}>
+            <NavLink to="/admin/pre-order-enquiries" onClick={handleLinkClick}>
               Enquiries
             </NavLink>
 

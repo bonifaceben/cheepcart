@@ -118,10 +118,39 @@ export default function AdminProductsList() {
                   <td className="product-actions">
                     {/* Edit button */}
                     <button
-                      onClick={() => navigate(`/admin/products/update/${product._id}`)}
-                    >
-                      <FaEdit />
-                    </button>
+  onClick={() =>
+    navigate(
+      `/admin/products/update/${product._id}`,
+      {
+        state: {
+          product: {
+            _id: product._id,
+
+            name: product.name,
+
+            price: product.price,
+
+            comparePrice:
+              product.comparePrice,
+
+            stock: product.stock,
+
+            isFeatured:
+              product.isFeatured,
+
+            isActive:
+              product.isActive,
+
+            images:
+              product.images || [],
+          },
+        },
+      }
+    )
+  }
+>
+  <FaEdit />
+</button>
                     {/* Delete button */}
                     <button onClick={() => handleDeleteClick(product._id)}>
                       <FaTrash />

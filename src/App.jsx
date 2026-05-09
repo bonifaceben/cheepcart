@@ -52,6 +52,10 @@ import AdminUpdateProduct from "./pages/admin/Products/AdminUpdateProduct";
 import Users from "./pages/admin/Users/Users";
 import CreatePreOrder from "./pages/admin/CreatePreOrder";
 import AdminOrders from "./pages/admin/Orders/AdminOrders";
+import AdminPreOrders from "./pages/admin/AdminPreOrders";
+import EditPreOrder from "./pages/admin/EditPreOrder";
+import AdminPreOrderEnquiries from "./pages/admin/AdminPreOrderEnquiries";
+import PreOrderProductDetails from "./pages/admin/PreOrderProductDetails";
 
 
 
@@ -74,6 +78,10 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/category/:slug" element={<Category />} />
             <Route path="/search" element={<Search />} />
+            <Route
+  path="/china-products/:slug"
+  element={<PreOrderProductDetails />}
+/>
 
             {/* ✅ CHECKOUT ROUTE (PROTECTED) */}
             <Route
@@ -142,14 +150,20 @@ function App() {
   {/* Categories */}
   <Route path="categories/create" element={<AdminCreateCategory />} />
   <Route path="categories" element={<CategoriesList />} />
-  <Route path="categories/update/:categoryId" element={<UpdateCategory />} />
+  <Route
+  path="/admin/update-category/:id"
+  element={<UpdateCategory />}
+/>
   <Route path="categories/delete/:categoryId" element={<DeleteCategory />} />
   
 
   {/* Products */}
   <Route path="products/create" element={<AdminCreateProduct />} />
   <Route path="products" element={<AdminProductList />} />
-  <Route path="products/update/:productId" element={<AdminUpdateProduct />} />
+  <Route
+  path="/admin/products/update/:productId"
+  element={<AdminUpdateProduct />}
+/>
 
   {/* 🔥 FIXED BANNERS ROUTE */}
   <Route path="banners/create" element={<CreateBanner />} />
@@ -165,6 +179,22 @@ function App() {
 
   {/* 🔥 all orders */}
   <Route path="orders" element={<AdminOrders />} />
+
+
+  <Route
+  path="/admin/preorder"
+  element={<AdminPreOrders />}
+/>
+
+<Route
+  path="/admin/pre-orders/edit/:id"
+  element={<EditPreOrder />}
+/>
+
+<Route
+  path="/admin/pre-order-enquiries"
+  element={<AdminPreOrderEnquiries />}
+/>
 
 </Route>
 

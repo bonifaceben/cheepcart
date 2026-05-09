@@ -1,0 +1,151 @@
+.edit-preorder-container {
+  width: 100%;
+  max-width: 750px;
+
+  margin: 40px auto;
+  padding: 30px;
+
+  background: #fff;
+  border-radius: 18px;
+
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+}
+
+.edit-preorder-container h2 {
+  font-size: 30px;
+  font-weight: 700;
+
+  margin-bottom: 25px;
+  color: #111;
+}
+
+.edit-preorder-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.edit-preorder-form input,
+.edit-preorder-form textarea,
+.edit-preorder-form select {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border: 1px solid #ddd;
+  border-radius: 12px;
+
+  font-size: 15px;
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.edit-preorder-form input:focus,
+.edit-preorder-form textarea:focus,
+.edit-preorder-form select:focus {
+  border-color: #ff6b00;
+}
+
+.edit-preorder-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.upload-note {
+  margin-top: -8px;
+  font-size: 14px;
+  color: #777;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(130px, 1fr)
+  );
+
+  gap: 14px;
+}
+
+.preview-card {
+  position: relative;
+}
+
+.preview-image {
+  width: 100%;
+  height: 130px;
+
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.remove-preview-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 28px;
+  height: 28px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: red;
+  color: white;
+
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.update-btn {
+  height: 54px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #ff6b00;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.update-btn:hover {
+  background: #e85f00;
+}
+
+.update-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.edit-loading {
+  padding: 50px;
+  text-align: center;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .edit-preorder-container {
+    margin: 15px;
+    padding: 20px;
+  }
+
+  .preview-image {
+    height: 110px;
+  }
+}

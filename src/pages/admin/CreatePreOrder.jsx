@@ -7,9 +7,6 @@ export default function CreatePreOrder() {
   const { token } = useAuth();
   const fileRef = useRef();
 
-  const CLOUD_NAME = "dpqb1hpmc";
-  const UPLOAD_PRESET = "cheepcart_unsigned";
-
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -18,34 +15,67 @@ export default function CreatePreOrder() {
     displayOrder: 1,
   });
 
-  const [imageFile, setImageFile] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // HANDLE CHANGE
+  // HANDLE INPUT CHANGE
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // HANDLE IMAGE
+  // HANDLE IMAGES
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const files = Array.from(e.target.files);
 
-    if (!file) return;
+    if (!files.length) return;
 
-    // basic validation
-    if (!file.type.startsWith("image/")) {
-      alert("Only image files allowed");
+    // COMBINE OLD + NEW
+    const combinedFiles = [...imageFiles, ...files];
+
+    // LIMIT
+    if (combinedFiles.length > 4) {
+      alert("Maximum 4 images allowed");
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      alert("Image must be less than 2MB");
-      return;
+    // VALIDATION
+    for (const file of combinedFiles) {
+      if (!file.type.startsWith("image/")) {
+        alert("Only image files are allowed");
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Each image must be less than 5MB");
+        return;
+      }
     }
 
-    setImageFile(file);
-    setPreview(URL.createObjectURL(file));
+    setImageFiles(combinedFiles);
+
+    const previewUrls = combinedFiles.map((file) =>
+      URL.createObjectURL(file)
+    );
+
+    setPreviews(previewUrls);
+  };
+
+  // REMOVE IMAGE
+  const removeImage = (indexToRemove) => {
+    const updatedFiles = imageFiles.filter(
+      (_, index) => index !== indexToRemove
+    );
+
+    const updatedPreviews = previews.filter(
+      (_, index) => index !== indexToRemove
+    );
+
+    setImageFiles(updatedFiles);
+    setPreviews(updatedPreviews);
   };
 
   // SUBMIT
@@ -57,67 +87,60 @@ export default function CreatePreOrder() {
       return;
     }
 
-    if (!imageFile) {
-      alert("Please upload an image");
+    if (imageFiles.length === 0) {
+      alert("Please upload at least one image");
       return;
     }
 
     try {
       setLoading(true);
 
-      // ================= CLOUDINARY =================
-      const cloudData = new FormData();
-      cloudData.append("file", imageFile);
-      cloudData.append("upload_preset", UPLOAD_PRESET);
+      // ================= FORM DATA =================
+      const formData = new FormData();
 
-      const cloudRes = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-        {
-          method: "POST",
-          body: cloudData,
-        }
-      );
+      formData.append("name", form.name.trim());
 
-      const cloudResult = await cloudRes.json();
-
-      if (!cloudRes.ok || !cloudResult.secure_url) {
-        console.error(cloudResult);
-        throw new Error("Image upload failed");
+      if (form.description) {
+        formData.append("description", form.description);
       }
-
-      // ================= BACKEND PAYLOAD =================
-      const payload = {
-        name: form.name.trim(),
-        description: form.description || "",
-        status: form.status,
-        displayOrder: Number(form.displayOrder) || 1,
-        image: {
-          secure_url: cloudResult.secure_url,
-          public_id: cloudResult.public_id,
-        },
-      };
 
       if (form.price) {
-        payload.price = Number(form.price);
+        formData.append("price", Number(form.price));
       }
 
-      // ================= API CALL =================
-      const res = await fetch(`${API_BASE_URL}/pre-order-products`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
+      formData.append("status", form.status);
+
+      formData.append(
+        "displayOrder",
+        Number(form.displayOrder) || 1
+      );
+
+      // ================= IMAGES =================
+      imageFiles.forEach((file) => {
+        formData.append("images", file);
       });
+
+      // ================= API CALL =================
+      const res = await fetch(
+        `${API_BASE_URL}/pre-order-products`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Failed to create product");
+        throw new Error(
+          data.message || "Failed to create pre-order"
+        );
       }
 
-      alert("Pre-order created successfully!");
+      alert("Pre-order product created successfully!");
 
       // ================= RESET =================
       setForm({
@@ -128,8 +151,8 @@ export default function CreatePreOrder() {
         displayOrder: 1,
       });
 
-      setImageFile(null);
-      setPreview(null);
+      setImageFiles([]);
+      setPreviews([]);
 
       if (fileRef.current) {
         fileRef.current.value = "";
@@ -147,7 +170,10 @@ export default function CreatePreOrder() {
     <div className="preorder-admin-container">
       <h2>Create Pre-Order Product</h2>
 
-      <form onSubmit={handleSubmit} className="preorder-form">
+      <form
+        onSubmit={handleSubmit}
+        className="preorder-form"
+      >
 
         <input
           type="text"
@@ -176,21 +202,42 @@ export default function CreatePreOrder() {
         <input
           type="file"
           accept="image/*"
+          multiple
           onChange={handleImageChange}
           ref={fileRef}
           required
         />
 
-        {preview && (
-          <img
-            src={preview}
-            alt="preview"
-            style={{
-              width: "120px",
-              borderRadius: "8px",
-              marginTop: "10px",
-            }}
-          />
+        <p className="upload-note">
+          You can upload up to 4 images
+        </p>
+
+        {/* IMAGE PREVIEWS */}
+        {previews.length > 0 && (
+          <div className="preview-grid">
+            {previews.map((preview, index) => (
+              <div
+                className="preview-card"
+                key={index}
+              >
+                <img
+                  src={preview}
+                  alt={`preview-${index}`}
+                  className="preview-image"
+                />
+
+                <button
+                  type="button"
+                  className="remove-preview-btn"
+                  onClick={() =>
+                    removeImage(index)
+                  }
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
         )}
 
         <select
@@ -198,9 +245,17 @@ export default function CreatePreOrder() {
           value={form.status}
           onChange={handleChange}
         >
-          <option value="available">Available</option>
-          <option value="coming_soon">Coming Soon</option>
-          <option value="closed">Closed</option>
+          <option value="available">
+            Available
+          </option>
+
+          <option value="coming_soon">
+            Coming Soon
+          </option>
+
+          <option value="closed">
+            Closed
+          </option>
         </select>
 
         <input
@@ -210,8 +265,13 @@ export default function CreatePreOrder() {
           onChange={handleChange}
         />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Uploading..." : "Create Product"}
+        <button
+          type="submit"
+          disabled={loading}
+        >
+          {loading
+            ? "Uploading..."
+            : "Create Product"}
         </button>
 
       </form>

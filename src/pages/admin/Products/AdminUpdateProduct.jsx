@@ -1,226 +1,700 @@
-import { useState, useEffect } from "react";
-import { API_BASE_URL } from "../../../config/api"; // Correct API URL
+import { useState } from "react";
+import { API_BASE_URL } from "../../../config/api";
 import { useAuth } from "../../../context/AuthContext";
-import { useNavigate, useParams } from "react-router-dom";
-import Preloader from "../../../Preloader"; // Optional pre-loader
-import { FaSave } from "react-icons/fa"; // Save icon
+import {
+  useNavigate,
+  useParams,
+  useLocation,
+} from "react-router-dom";
+
+import { FaSave } from "react-icons/fa";
+
+import "./AdminProductList.css";
 
 export default function AdminUpdateProduct() {
-  const { token } = useAuth(); // Get token from AuthContext
+
+  const { token } = useAuth();
+
   const navigate = useNavigate();
-  const { productId } = useParams(); // Get the product ID from the URL
 
-  const [product, setProduct] = useState(null); // Store the product data
-  const [loading, setLoading] = useState(true); // Track loading state
-  const [error, setError] = useState(""); // Error state
-  const [formData, setFormData] = useState({
-    price: "",
-    stock: "",
-    description: "",
-    images: [], // To hold the current image and the new ones
-  });
+  const { productId } = useParams();
 
-  // Fetch the product data
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setLoading(true);
-      setError(""); // Reset error message
+  const location = useLocation();
 
-      try {
-        const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
+  // ================= PRODUCT =================
+
+  const productData =
+    location.state?.product;
+
+  // ================= FORMAT IMAGES =================
+
+  const formattedImages = Array.isArray(
+    productData?.images
+  )
+    ? productData.images.map((img) => {
+
+        // STRING IMAGE
+
+        if (typeof img === "string") {
+
+          return {
+            url: img,
+            public_id: "",
+          };
+
+        }
+
+        // OBJECT IMAGE
+
+        return {
+          url:
+            img?.url ||
+            img?.secure_url ||
+            "",
+
+          public_id:
+            img?.public_id || "",
+        };
+
+      })
+    : [];
+
+  // ================= STATES =================
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [uploading, setUploading] =
+    useState(false);
+
+  const [error, setError] =
+    useState("");
+
+  const [formData, setFormData] =
+    useState({
+      name:
+        productData?.name || "",
+
+      price:
+        productData?.price || "",
+
+      comparePrice:
+        productData?.comparePrice ||
+        "",
+
+      stock:
+        productData?.stock || "",
+
+      isFeatured:
+        productData?.isFeatured ??
+        false,
+
+      isActive:
+        productData?.isActive ??
+        true,
+
+      images: formattedImages,
+    });
+
+  // ================= INPUT CHANGE =================
+
+  const handleChange = (e) => {
+
+    const {
+      name,
+      value,
+      type,
+      checked,
+    } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+
+      [name]:
+        type === "checkbox"
+          ? checked
+          : value,
+    }));
+
+  };
+
+  // ================= IMAGE UPDATE =================
+
+  const handleImageChange = async (
+    e,
+    index
+  ) => {
+
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    try {
+
+      setUploading(true);
+
+      setError("");
+
+      const uploadData =
+        new FormData();
+
+      // ================= CURRENT IMAGE =================
+
+      const currentImage =
+        formData.images[index];
+
+      // IMPORTANT
+      // BACKEND EXPECTS oldImages[]
+
+      if (
+        currentImage?.public_id
+      ) {
+
+        uploadData.append(
+          "oldImages[]",
+          currentImage.public_id
+        );
+
+      }
+
+      // ================= NEW IMAGE =================
+
+      uploadData.append(
+        "images",
+        file
+      );
+
+      uploadData.append(
+        "type",
+        "products"
+      );
+
+      // ================= API =================
+
+      const response = await fetch(
+        `${API_BASE_URL}/upload/update`,
+        {
+          method: "PUT",
+
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch product. Status: ${response.status}`);
+          body: uploadData,
         }
+      );
 
-        const data = await response.json();
-        console.log("Fetched product data:", data); // Log the fetched product data
+      const data =
+        await response.json();
 
-        setProduct(data); // Set the product data
-        setFormData({
-          price: data.price,
-          stock: data.stock,
-          description: data.description,
-          images: data.images || [], // Populate images
-        });
-      } catch (error) {
-        console.error("Error fetching product:", error); // Log error to the console
-        setError(error.message); // Show the error message in the UI
-      } finally {
-        setLoading(false);
-      }
-    };
+      console.log(
+        "UPLOAD RESPONSE:",
+        data
+      );
 
-    fetchProduct();
-  }, [productId, token]);
+      if (
+        response.ok &&
+        data.success
+      ) {
 
-  // Handle form data change
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+        const updatedImages = [
+          ...formData.images,
+        ];
 
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+        // IMPORTANT
+        // SAVE RETURNED IMAGE
 
-  // Handle file/image upload
-  const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Get the selected image file
-    uploadImage(file); // Upload the image to the server
-  };
+        updatedImages[index] = {
+          url:
+            data?.images?.[0]
+              ?.url || "",
 
-  // Upload image to server
-  const uploadImage = async (file) => {
-    const formData = new FormData();
-    formData.append("image", file); // The backend expects 'image' as the field name
+          public_id:
+            data?.images?.[0]
+              ?.public_id || "",
+        };
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/upload`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+        setFormData((prev) => ({
+          ...prev,
 
-      const data = await response.json();
+          images:
+            updatedImages,
+        }));
 
-      if (response.ok) {
-        setFormData({
-          ...formData,
-          images: [
-            ...formData.images,
-            {
-              secure_url: data.url, // Add the URL of the new image
-              public_id: data.public_id,
-            },
-          ],
-        });
       } else {
-        setError("Image upload failed.");
+
+        setError(
+          data.message ||
+          "Image upload failed"
+        );
+
       }
+
     } catch (error) {
-      setError("Error uploading image.");
+
+      console.log(error);
+
+      setError(
+        "Error uploading image"
+      );
+
+    } finally {
+
+      setUploading(false);
+
     }
+
   };
 
-  // Handle form submit
-  const handleSubmit = async (e) => {
+  // ================= REMOVE IMAGE =================
+
+  const handleRemoveImage = (
+    index
+  ) => {
+
+    const updatedImages =
+      formData.images.filter(
+        (_, i) =>
+          i !== index
+      );
+
+    setFormData((prev) => ({
+      ...prev,
+
+      images:
+        updatedImages,
+    }));
+
+  };
+
+  // ================= UPDATE PRODUCT =================
+
+  const handleSubmit = async (
+    e
+  ) => {
+
     e.preventDefault();
 
-    const updatedProduct = {
-      price: formData.price,
-      stock: formData.stock,
-      description: formData.description,
-      images: formData.images, // Handle image uploads as needed
-    };
-
-    setLoading(true);
-
     try {
-      const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProduct),
-      });
 
-      const data = await response.json();
+      setLoading(true);
+
+      setError("");
+
+      const updatedProduct = {
+        name:
+          formData.name,
+
+        price: Number(
+          formData.price
+        ),
+
+        comparePrice:
+          Number(
+            formData.comparePrice
+          ),
+
+        stock: Number(
+          formData.stock
+        ),
+
+        isFeatured:
+          formData.isFeatured,
+
+        isActive:
+          formData.isActive,
+
+        images:
+          formData.images,
+      };
+
+      console.log(
+        "FINAL PRODUCT:",
+        updatedProduct
+      );
+
+      const response = await fetch(
+        `${API_BASE_URL}/products/${productId}`,
+        {
+          method: "PUT",
+
+          headers: {
+            Authorization: `Bearer ${token}`,
+
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify(
+            updatedProduct
+          ),
+        }
+      );
+
+      const data =
+        await response.json();
+
+      console.log(
+        "UPDATE RESPONSE:",
+        data
+      );
 
       if (response.ok) {
-        navigate(`/admin/products`); // Redirect to product list after successful update
+
+        navigate(
+          "/admin/products"
+        );
+
       } else {
-        setError(data.message || "Failed to update product.");
+
+        setError(
+          data.message ||
+          "Failed to update product"
+        );
+
       }
+
     } catch (error) {
-      setError("Error updating product.");
+
+      console.log(error);
+
+      setError(
+        "Error updating product"
+      );
+
     } finally {
+
       setLoading(false);
+
     }
+
   };
 
-  if (loading) {
-    return <Preloader />; // Show preloader while fetching data
-  }
+  // ================= UI =================
 
   return (
-    <div className="admin-update-product">
-      <h2>Update Product</h2>
 
-      {error && <p className="error">{error}</p>}
+    <div className="admin-create-category">
 
-      {/* Product Update Form */}
-      <form onSubmit={handleSubmit}>
+      <h2>
+        Update Product
+      </h2>
+
+      {error && (
+        <p className="error">
+          {error}
+        </p>
+      )}
+
+      <form
+        onSubmit={
+          handleSubmit
+        }
+      >
+
+        {/* NAME */}
+
         <div>
-          <label>Price</label>
+
+          <label>
+            Product Name
+          </label>
+
+          <input
+            type="text"
+            name="name"
+            value={
+              formData.name
+            }
+            onChange={
+              handleChange
+            }
+            required
+          />
+
+        </div>
+
+        {/* PRICE */}
+
+        <div>
+
+          <label>
+            Price
+          </label>
+
           <input
             type="number"
             name="price"
-            value={formData.price}
-            onChange={handleChange}
+            value={
+              formData.price
+            }
+            onChange={
+              handleChange
+            }
             required
           />
+
         </div>
 
+        {/* COMPARE PRICE */}
+
         <div>
-          <label>Stock</label>
+
+          <label>
+            Compare Price
+          </label>
+
+          <input
+            type="number"
+            name="comparePrice"
+            value={
+              formData.comparePrice
+            }
+            onChange={
+              handleChange
+            }
+          />
+
+        </div>
+
+        {/* STOCK */}
+
+        <div>
+
+          <label>
+            Stock
+          </label>
+
           <input
             type="number"
             name="stock"
-            value={formData.stock}
-            onChange={handleChange}
+            value={
+              formData.stock
+            }
+            onChange={
+              handleChange
+            }
             required
           />
+
         </div>
 
-        <div>
-          <label>Description</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
+        {/* FEATURED */}
+
+        <div
+          style={{
+            marginTop:
+              "20px",
+          }}
+        >
+
+          <label
+            style={{
+              display:
+                "flex",
+
+              alignItems:
+                "center",
+
+              gap: "10px",
+            }}
+          >
+
+            <input
+              type="checkbox"
+              name="isFeatured"
+              checked={
+                formData.isFeatured
+              }
+              onChange={
+                handleChange
+              }
+            />
+
+            Featured Product
+
+          </label>
+
         </div>
 
+        {/* ACTIVE */}
+
+        <div
+          style={{
+            marginTop:
+              "15px",
+
+            marginBottom:
+              "20px",
+          }}
+        >
+
+          <label
+            style={{
+              display:
+                "flex",
+
+              alignItems:
+                "center",
+
+              gap: "10px",
+            }}
+          >
+
+            <input
+              type="checkbox"
+              name="isActive"
+              checked={
+                formData.isActive
+              }
+              onChange={
+                handleChange
+              }
+            />
+
+            Active Product
+
+          </label>
+
+        </div>
+
+        {/* IMAGES */}
+
         <div>
-          <label>Images</label>
-          <input
-            type="file"
-            name="images"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-          {/* Optional: Show current image(s) */}
-          {formData.images.length > 0 && (
-            <div>
-              {formData.images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image.secure_url}
-                  alt={`Product Image ${index + 1}`}
-                  style={{ width: "100px", height: "100px", marginRight: "10px" }}
-                />
-              ))}
-            </div>
+
+          <label>
+            Product Images
+          </label>
+
+          <div className="image-grid">
+
+            {Array.isArray(
+              formData.images
+            ) &&
+              formData.images.map(
+                (
+                  image,
+                  index
+                ) => {
+
+                  // IMPORTANT
+                  // HANDLE STRING + OBJECT
+
+                  const imageUrl =
+                    typeof image ===
+                    "string"
+                      ? image
+                      : image?.url ||
+                        image?.secure_url ||
+                        "";
+
+                  return (
+
+                    <div
+                      key={index}
+                      className="image-card"
+                    >
+
+                      <img
+                        src={imageUrl}
+                        alt="Product"
+                        className="image-preview"
+                      />
+
+                      {/* REMOVE */}
+
+                      <button
+                        type="button"
+                        className="remove-btn"
+                        onClick={() =>
+                          handleRemoveImage(
+                            index
+                          )
+                        }
+                      >
+                        ×
+                      </button>
+
+                      {/* UPDATE */}
+
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="image-upload-input"
+                        onChange={(e) =>
+                          handleImageChange(
+                            e,
+                            index
+                          )
+                        }
+                      />
+
+                    </div>
+
+                  );
+
+                }
+              )}
+
+          </div>
+
+          {uploading && (
+            <p
+              style={{
+                marginTop: "10px",
+              }}
+            >
+              Uploading image...
+            </p>
           )}
+
         </div>
 
-        <div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Updating..." : "Update Product"} <FaSave />
-          </button>
-        </div>
+        {/* SUBMIT */}
+
+        <button
+          type="submit"
+          disabled={
+            loading ||
+            uploading
+          }
+          style={{
+            marginTop:
+              "25px",
+          }}
+        >
+
+          {loading
+            ? "Updating..."
+            : "Update Product"}
+
+          <FaSave
+            style={{
+              marginLeft:
+                "8px",
+            }}
+          />
+
+        </button>
+
       </form>
 
-      <button onClick={() => navigate(`/admin/products`)}>Cancel</button>
+      {/* CANCEL */}
+
+      <button
+        type="button"
+        className="cancel-btn"
+        onClick={() =>
+          navigate(
+            "/admin/products"
+          )
+        }
+      >
+        Cancel
+      </button>
+
     </div>
+
   );
+
 }
