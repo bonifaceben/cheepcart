@@ -17,6 +17,7 @@ import Checkout from "./pages/Checkout"; // ✅ ADDED
 import CheckoutSummary from "./pages/CheckoutSummary";
 import Category from "./pages/Category";
 import Search from "./pages/Search";
+import NotFound from "./pages/NotFound";
 
 
 // ================= BANNERS =================
@@ -198,6 +199,11 @@ function App() {
 
 </Route>
 
+<Route
+  path="*"
+  element={<NotFound />}
+/>
+
           <Route
   path="/payment-success"
   element={
@@ -210,6 +216,8 @@ function App() {
         </Routes>
       </Router>
     </CartProvider>
+
+    
   );
 }
 

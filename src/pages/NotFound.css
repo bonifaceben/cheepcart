@@ -1,0 +1,105 @@
+.notfound-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f3f3f3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.notfound-card {
+  width: 100%;
+  max-width: 500px;
+
+  background: transparent;
+
+  text-align: center;
+}
+
+.notfound-icon {
+  width: 160px;
+  height: 160px;
+
+  margin: 0 auto 25px;
+
+  border-radius: 50%;
+
+  background: #ececec;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 70px;
+}
+
+.notfound-card h1 {
+  font-size: 42px;
+  font-weight: 800;
+
+  color: #111;
+
+  margin-bottom: 16px;
+}
+
+.notfound-card p {
+  font-size: 20px;
+  line-height: 1.7;
+
+  color: #555;
+
+  margin-bottom: 35px;
+}
+
+.notfound-card button {
+  width: 240px;
+  height: 62px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #ff9800;
+  color: white;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 10px 25px rgba(255, 152, 0, 0.25);
+
+  transition: 0.2s ease;
+}
+
+.notfound-card button:hover {
+  transform: translateY(-2px);
+  background: #f28c00;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .notfound-icon {
+    width: 120px;
+    height: 120px;
+
+    font-size: 50px;
+  }
+
+  .notfound-card h1 {
+    font-size: 32px;
+  }
+
+  .notfound-card p {
+    font-size: 17px;
+  }
+
+  .notfound-card button {
+    width: 100%;
+    font-size: 18px;
+  }
+}

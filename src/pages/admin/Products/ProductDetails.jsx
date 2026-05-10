@@ -553,39 +553,113 @@ const handleWishlistToggle = async () => {
           )}
         </div>
 
-        {/* RIGHT - Delivery */}
-        <div className="delivery-column">
-          <div className="delivery-card">
-            <h3>DELIVERY & RETURNS</h3>
+        {/* RIGHT - DELIVERY & RETURNS */}
+<div className="delivery-column">
 
-            <div className="delivery-box">
-              <p className="delivery-title">Choose your location</p>
+  <div className="delivery-card">
 
-              <select className="delivery-select">
-                <option>Lagos</option>
-                <option>Abuja</option>
-                <option>Ibadan</option>
-                <option>Port Harcourt</option>
-              </select>
+    <h3>
+      DELIVERY & RETURNS
+    </h3>
 
-              <select className="delivery-select">
-                <option>LEKKI-AJAH (SANGOTEDO)</option>
-                <option>IKEJA</option>
-                <option>YABA</option>
-                <option>SURULERE</option>
-              </select>
-            </div>
+    {/* DELIVERY */}
+    <div className="delivery-info-box">
 
-            <div className="pickup-station">
-              <h4>Pickup Station</h4>
-              <p><strong>Delivery Fees:</strong> ₦5,600</p>
-              <p>
-                Ready for pickup between 01 April and 02 April if you place your order
-                within 3hrs 41mins
-              </p>
-            </div>
-          </div>
-        </div>
+      <div className="delivery-icon">
+        🚚
+      </div>
+
+      <div>
+
+        <h4>
+          Fast Nationwide Delivery
+        </h4>
+
+        <p>
+          Orders are processed within
+          24 hours and delivered within
+          2 - 5 working days depending
+          on your location.
+        </p>
+
+      </div>
+
+    </div>
+
+    {/* PAYMENT */}
+    <div className="delivery-info-box">
+
+      <div className="delivery-icon">
+        💳
+      </div>
+
+      <div>
+
+        <h4>
+          Secure Payment
+        </h4>
+
+        <p>
+          Pay securely using transfer,
+          card payment, or other trusted
+          payment methods available on
+          checkout.
+        </p>
+
+      </div>
+
+    </div>
+
+    {/* RETURNS */}
+    <div className="delivery-info-box">
+
+      <div className="delivery-icon">
+        🔄
+      </div>
+
+      <div>
+
+        <h4>
+          Easy Returns Policy
+        </h4>
+
+        <p>
+          Eligible products can be
+          returned within 7 days after
+          delivery if damaged, defective,
+          or incorrect.
+        </p>
+
+      </div>
+
+    </div>
+
+    {/* SUPPORT */}
+    <div className="delivery-info-box">
+
+      <div className="delivery-icon">
+        📞
+      </div>
+
+      <div>
+
+        <h4>
+          Customer Support
+        </h4>
+
+        <p>
+          Our support team is available
+          to assist you with your orders
+          and enquiries anytime.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
       </div>
 
       {/* Description */}
